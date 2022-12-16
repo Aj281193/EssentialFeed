@@ -11,7 +11,6 @@ import EssentialFeed
 class RemoteFeedLoaderTests: XCTestCase {
 
     func test_init_doestNotLoadDataFromURL() {
-       
         let (_, client) = makeSut()
         XCTAssertTrue(client.requestedURL.isEmpty)
     }
@@ -19,15 +18,15 @@ class RemoteFeedLoaderTests: XCTestCase {
     func test_load_requestsDataFromURL() {
         let url = URL(string: "https://a-u.com")!
         let (sut,client) = makeSut(url: url)
-        sut.load()
+        sut.load { _ in }
         XCTAssertEqual(client.requestedURL,[url])
     }
     
     func test_loadTwice_requestDataFromURLTwice() {
         let url = URL(string: "https://a-u.com")!
         let (sut,client) = makeSut(url: url)
-        sut.load()
-        sut.load()
+        sut.load { _ in }
+        sut.load { _ in }
         XCTAssertEqual(client.requestedURL, [url,url])
     }
     
