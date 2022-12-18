@@ -36,7 +36,6 @@ class URLSessionHttpClientTests: XCTestCase {
     }
     
     func test_getFromURL_performGETRequestWithURL() {
-       
         let url = anyURL()
         let exp = expectation(description: "Wait for request")
         
@@ -47,15 +46,11 @@ class URLSessionHttpClientTests: XCTestCase {
         }
         
         makeSUT().get(from: url) { _ in }
-        
         wait(for: [exp], timeout: 1.0)
     }
     
     func test_getFromURL_failsOnRequestError() {
-        
-        
         let error = NSError(domain: "Test", code: 1)
-        
         URLProtocolStub.stub(data: nil, response: nil, error: error)
 
         //since it is asynchronous
@@ -70,6 +65,7 @@ class URLSessionHttpClientTests: XCTestCase {
             }
             exp.fulfill()
         }
+        
         wait(for: [exp], timeout: 1.0)
     }
 
