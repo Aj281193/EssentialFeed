@@ -37,7 +37,6 @@ class URLSessionHttpClientTests: XCTestCase {
     
     func test_getFromURL_performGETRequestWithURL() {
        
-        
         let url = URL(string: "https://any-url.com")!
         let exp = expectation(description: "Wait for request")
         
@@ -76,8 +75,17 @@ class URLSessionHttpClientTests: XCTestCase {
 
    // MARK:- Helpers
     
-    private func makeSUT() -> URLSessionHttpClient {
-        return URLSessionHttpClient()
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHttpClient {
+        let sut = URLSessionHttpClient()
+        trackForMemoryLeak(sut,file: file,line: line)
+        return sut
+        
+    }
+    
+    private func trackForMemoryLeak(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have beeen deallocated, potential memory leak.",file: file, line: line)
+        }
     }
     
     private class URLProtocolStub: URLProtocol {
