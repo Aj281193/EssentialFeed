@@ -37,11 +37,12 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
         return FeedItems(id: id(at: index), description: description(at: index), location: location(at: index), imageURL: imageURL(at: index))
     }
     
-    private func getFeedResult() -> FeedLoaderResult? {
+    private func getFeedResult(file: StaticString = #filePath, line: UInt = #line) -> FeedLoaderResult? {
         let testServerUrl = URL(string: "https://run.mocky.io/v3/be58034c-259b-4a22-a099-568b4f04b103")!
         let client = URLSessionHttpClient()
         let loader = RemoteFeedLoader(url: testServerUrl, client: client)
-        
+        trackForMemoryLeak(client,file: file,line: line)
+        trackForMemoryLeak(loader,file: file,line: line)
         let exp = expectation(description: "wait for load completion")
         
         var receivedResult: FeedLoaderResult?
