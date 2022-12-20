@@ -11,21 +11,8 @@ import EssentialFeed
 class EssentialFeedAPIEndToEndTests: XCTestCase {
     
     func test_endToEndServerGetFeedResult_matchesFixedTestAutomationData() {
-        let testServerUrl = URL(string: "https://run.mocky.io/v3/be58034c-259b-4a22-a099-568b4f04b103")!
-        let client = URLSessionHttpClient()
-        let loader = RemoteFeedLoader(url: testServerUrl, client: client)
         
-        let exp = expectation(description: "wait for load completion")
-        
-        var receivedResult: FeedLoaderResult?
-        
-        loader.load { result in
-            receivedResult = result
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 10.0)
-        
-        switch receivedResult {
+        switch getFeedResult() {
         case let .success(items):
             XCTAssertEqual(items.count, 8, "Expected 8 item in the test account feed")
                 XCTAssertEqual(items[0], expectedItem(at: 0))
@@ -48,6 +35,24 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
     
     private func expectedItem(at index: Int) -> FeedItems {
         return FeedItems(id: id(at: index), description: description(at: index), location: location(at: index), imageURL: imageURL(at: index))
+    }
+    
+    private func getFeedResult() -> FeedLoaderResult? {
+        let testServerUrl = URL(string: "https://run.mocky.io/v3/be58034c-259b-4a22-a099-568b4f04b103")!
+        let client = URLSessionHttpClient()
+        let loader = RemoteFeedLoader(url: testServerUrl, client: client)
+        
+        let exp = expectation(description: "wait for load completion")
+        
+        var receivedResult: FeedLoaderResult?
+        
+        loader.load { result in
+            receivedResult = result
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 10.0)
+        
+        return receivedResult
     }
     
     private func id(at index: Int) -> UUID {
