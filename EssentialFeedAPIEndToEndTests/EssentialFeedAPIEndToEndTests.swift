@@ -38,7 +38,7 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
     }
     
     private func getFeedResult(file: StaticString = #filePath, line: UInt = #line) -> FeedLoaderResult? {
-        let testServerUrl = URL(string: "https://run.mocky.io/v3/be58034c-259b-4a22-a099-568b4f04b103")!
+        let testServerUrl = URL(string: "https://essentialdeveloper.com/feed-case-study/test-api/feed")!
         let client = URLSessionHttpClient()
         let loader = RemoteFeedLoader(url: testServerUrl, client: client)
         trackForMemoryLeak(client,file: file,line: line)
@@ -51,7 +51,7 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
             receivedResult = result
             exp.fulfill()
         }
-        wait(for: [exp], timeout: 10.0)
+        wait(for: [exp], timeout: 15.0)
         
         return receivedResult
     }
