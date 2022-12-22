@@ -11,10 +11,12 @@ import EssentialFeed
 class URLSessionHttpClientTests: XCTestCase {
 
     override func setUp() {
+        super.setUp()
         URLProtocolStub.startInterceptingRequest()
     }
     
     override func tearDown() {
+        super.tearDown()
         URLProtocolStub.stopInterceptingRequest()
     }
     
@@ -194,7 +196,6 @@ class URLSessionHttpClientTests: XCTestCase {
         static func stopInterceptingRequest() {
             URLProtocol.unregisterClass(URLProtocolStub.self)
             stub = nil
-            requestObserver = nil
         }
         
         override class func canInit(with request: URLRequest) -> Bool {
