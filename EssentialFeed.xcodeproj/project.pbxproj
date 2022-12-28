@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		95414A51295BFD220001E778 /* LocalFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95414A50295BFD220001E778 /* LocalFeedLoader.swift */; };
+		95414A53295BFE420001E778 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95414A52295BFE420001E778 /* FeedStore.swift */; };
 		95501C69294D037000267920 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95501C60294D037000267920 /* EssentialFeed.framework */; };
 		95501C6F294D037000267920 /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 95501C63294D037000267920 /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		95501C79294D038900267920 /* FeedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95501C78294D038900267920 /* FeedItems.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		95414A50295BFD220001E778 /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
+		95414A52295BFE420001E778 /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		95501C60294D037000267920 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95501C63294D037000267920 /* EssentialFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EssentialFeed.h; sourceTree = "<group>"; };
 		95501C68294D037000267920 /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				95414A50295BFD220001E778 /* LocalFeedLoader.swift */,
+				95414A52295BFE420001E778 /* FeedStore.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				955975D3294DDDED00153928 /* FeedItemsMapper.swift in Sources */,
 				95501C7C294D03AE00267920 /* FeedLoader.swift in Sources */,
 				95501C82294D078200267920 /* RemoteFeedLoader.swift in Sources */,
+				95414A53295BFE420001E778 /* FeedStore.swift in Sources */,
 				95414A51295BFD220001E778 /* LocalFeedLoader.swift in Sources */,
 				95944E542950A80E00DF54BB /* URLSessionHttpClient.swift in Sources */,
 				955975D1294DDDAC00153928 /* HTTPClient.swift in Sources */,
