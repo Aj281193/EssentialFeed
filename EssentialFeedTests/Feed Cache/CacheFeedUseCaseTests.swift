@@ -12,7 +12,7 @@ class FeedStoreSpy: FeedStore {
 
     enum ReceviedMessage: Equatable {
         case deleteCacheFeed
-        case insert([FeedItems],Date)
+        case insert([FeedItem],Date)
     }
     
     private(set) var receivedMessgae = [ReceviedMessage]()
@@ -41,7 +41,7 @@ class FeedStoreSpy: FeedStore {
         insertionCompletion[index](error)
     }
     
-    func insert(_ items: [FeedItems], timestamp: Date, completion: @escaping InsertionCompletion) {
+    func insert(_ items: [FeedItem], timestamp: Date, completion: @escaping InsertionCompletion) {
         insertionCompletion.append(completion)
         receivedMessgae.append(.insert(items, timestamp))
     }
@@ -168,8 +168,8 @@ final class CacheFeedUseCaseTests: XCTestCase {
         XCTAssertEqual(receivedError as NSError?,expectedError, file: file,line: line)
     }
     
-    private func uniqueItem() -> FeedItems {
-        return FeedItems(id: UUID(), description: "any", location: "any", imageURL: anyURL())
+    private func uniqueItem() -> FeedItem {
+        return FeedItem(id: UUID(), description: "any", location: "any", imageURL: anyURL())
     }
     
     private func anyURL() -> URL {
