@@ -9,7 +9,7 @@ import XCTest
 import EssentialFeed
 
 class FeedStoreSpy: FeedStore {
-    
+  
     enum ReceviedMessage: Equatable {
         case deleteCacheFeed
         case insert([LocalFeedImage],Date)
@@ -20,6 +20,7 @@ class FeedStoreSpy: FeedStore {
     
     private var deleteCompletion = [DeletionCompletion]()
     private var insertionCompletion = [InsertionCompletion]()
+    private var retrievalCompletion = [RetrievalCompletion]()
     
     func deleteCacheFeed(completion: @escaping DeletionCompletion) {
         deleteCompletion.append(completion)
@@ -42,12 +43,17 @@ class FeedStoreSpy: FeedStore {
         insertionCompletion[index](error)
     }
     
+    func completeRetrieval(with error: Error,at index: Int = 0) {
+        retrievalCompletion[index](error)
+    }
+    
     func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
         insertionCompletion.append(completion)
         receivedMessgae.append(.insert(feed, timestamp))
     }
     
-    func retrieve() {
+    func retrieve(completion: @escaping RetrievalCompletion) {
+        retrievalCompletion.append(completion)
         receivedMessgae.append(.retrieve)
     }
 }
