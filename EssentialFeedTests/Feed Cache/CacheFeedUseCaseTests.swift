@@ -8,7 +8,7 @@
 import XCTest
 import EssentialFeed
 
-class FeedStoreSpy: FeedStore {
+private class FeedStoreSpy: FeedStore {
 
     enum ReceviedMessage: Equatable {
         case deleteCacheFeed
