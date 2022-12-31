@@ -16,6 +16,13 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.receivedMessgae, [])
     }
     
+    func test_validateCache_deleteCacheOnRetrievalError() {
+        let (sut,store) = makeSUT()
+        sut.validateCache()
+        store.completeRetrieval(with: anyNSError())
+        XCTAssertEqual(store.receivedMessgae, [.retrieve,.deleteCacheFeed])
+    }
+    
     //MARK: Helpers
     private func makeSUT(currentDate: @escaping () -> Date = Date.init,file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalFeedLoader,store: FeedStoreSpy) {
         let store = FeedStoreSpy()
@@ -23,6 +30,10 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         trackForMemoryLeak(sut,file: file,line: line)
         trackForMemoryLeak(store, file: file,line: line)
         return (sut,store)
+    }
+    
+    private func anyNSError() -> NSError {
+        return NSError(domain: "any error", code: 0)
     }
 
 }
