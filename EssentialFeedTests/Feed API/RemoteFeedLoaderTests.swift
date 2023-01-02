@@ -8,7 +8,7 @@
 import XCTest
 import EssentialFeed
 
-class RemoteFeedLoaderTests: XCTestCase {
+class LoadFeedFromRemoteUseCaseTests: XCTestCase {
 
     func test_init_doestNotLoadDataFromURL() {
         let (_, client) = makeSut()
@@ -133,12 +133,12 @@ class RemoteFeedLoaderTests: XCTestCase {
         
     }
     
-    private func makeItem(id: UUID, description: String? = nil, location: String? = nil, imageURL: URL) -> (model: FeedItems, json: [String: Any]) {
+    private func makeItem(id: UUID, description: String? = nil, location: String? = nil, imageURL: URL) -> (model: FeedImage, json: [String: Any]) {
         
-        let item = FeedItems(id: id,
+        let item = FeedImage(id: id,
                             description: description,
                             location: location,
-                            imageURL: imageURL)
+                            url: imageURL)
         let json = [
             "id": id.uuidString,
             "description": description,
