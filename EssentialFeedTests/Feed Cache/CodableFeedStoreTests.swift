@@ -172,28 +172,19 @@ final class CodableFeedStoreTests: XCTestCase {
     
     func test_delete_hasNoSideEffectOnEmptyCache() {
         let sut = makeSUT()
-        let exp = expectation(description: "wait for cache deletion")
         
-        sut.deleteCacheFeed { deletionError in
-            XCTAssertNil(deletionError,"Expected empty cache deletion to succeed")
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1.0)
+        let deletionError = deleteCache(from: sut)
         
+        XCTAssertNil(deletionError,"Expected non empty cache deletion to suceed")
         expect(sut, toRetrive: .empty)
     }
     
     func test_delete_emptiesPreviouslyInsertedCache() {
         let sut = makeSUT()
-        insert((uniqueImageFeed().local,Date()), to: sut)
+        insert((uniqueImageFeed().local, Date()), to: sut)
+        let deletionError = deleteCache(from: sut)
         
-        let exp = expectation(description: "wait for cache deletion")
-        sut.deleteCacheFeed { deletionError in
-            XCTAssertNil(deletionError, "Expected non-empty cache deletion to succeed")
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1.0)
-        
+        XCTAssertNil(deletionError,"Expected non empty cache deletion to suceed")
         expect(sut, toRetrive: .empty)
     }
     
@@ -220,6 +211,21 @@ final class CodableFeedStoreTests: XCTestCase {
         return insetionError
     }
         
+    private func deleteCache(from sut: CodableFeedStore) -> Error? {
+        let exp = expectation(description: "wait for cache deletion")
+        
+        var deletionError: Error?
+        
+        sut.deleteCacheFeed { receivedDeletionError in
+            deletionError = receivedDeletionError
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+        
+        return deletionError
+    }
+    
+    
     private func expect(_ sut: CodableFeedStore, toRetriveTwice expectedResult: RetrieveCaheFeedResult, file: StaticString = #filePath, line: UInt = #line) {
         
         expect(sut, toRetrive: expectedResult,file: file,line: line)
