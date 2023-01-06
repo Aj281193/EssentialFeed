@@ -188,8 +188,17 @@ final class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetrive: .empty)
     }
     
-    //MARK: Helpers
+    func test_delete_deliversErrorOnDeletionError() {
+        let noDelePermissionURL = cacheDirectory()
+        let sut = makeSUT(storeURL: noDelePermissionURL)
+        
+        let delitionError = deleteCache(from: sut)
+        
+        XCTAssertNotNil(delitionError,"Expected cache delition to fail")
+        expect(sut, toRetrive: .empty)
+    }
     
+    //MARK: Helpers
     private func makeSUT(storeURL: URL? = nil, file: StaticString = #filePath, line: UInt = #line) -> CodableFeedStore {
         let sut = CodableFeedStore(storeURL: storeURL ?? testSpecificStoreURL)
         trackForMemoryLeak(sut,file: file,line: line)
@@ -254,7 +263,11 @@ final class CodableFeedStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     var testSpecificStoreURL: URL {
-        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appendingPathComponent("\(type(of: self)).store")
+        return cacheDirectory().appendingPathComponent("\(type(of: self)).store")
+    }
+    
+    private func cacheDirectory() -> URL {
+        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
     
     private func  setupEmptyStoreState() {
