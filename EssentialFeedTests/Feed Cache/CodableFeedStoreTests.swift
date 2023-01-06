@@ -46,9 +46,14 @@ class CodableFeedStore {
     func retrieve(completion: @escaping FeedStore.RetrievalCompletion) {
         guard let data = try? Data(contentsOf: storeURL) else {
            return completion(.empty) }
-        let decoder = JSONDecoder()
-        let cache = try! decoder.decode(Cache.self, from: data)
-        completion(.found(feed: cache.localFeed, timeStamp: cache.timestamp))
+        
+        do {
+            let decoder = JSONDecoder()
+            let cache = try decoder.decode(Cache.self, from: data)
+            completion(.found(feed: cache.localFeed, timeStamp: cache.timestamp))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping FeedStore.InsertionCompletion) {
@@ -86,7 +91,7 @@ final class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetriveTwice: .empty)
     }
     
-    func test_retriveAfterInsertingToEmptyCache_deliversInsertedValue() {
+    func test_retrive_deliversFoundValueOnNonEmptyCache() {
         let sut = makeSUT()
         let feed = uniqueImageFeed().local
         let timeStamp = Date()
@@ -104,6 +109,14 @@ final class CodableFeedStoreTests: XCTestCase {
         insert((feed,timeStamp), to: sut)
         
         expect(sut, toRetriveTwice: .found(feed: feed, timeStamp: timeStamp))
+    }
+    
+    func test_retrieve_deliversFailureOnRetrivalError() {
+        let sut = makeSUT()
+        
+        try! "InvalidData".write(to: testSpecificStoreURL, atomically: false, encoding: .utf8)
+        
+        expect(sut, toRetrive: .failure(anyNSError()))
     }
     
     //MARK: Helpers
@@ -137,7 +150,7 @@ final class CodableFeedStoreTests: XCTestCase {
         sut.retrieve { retriveResult in
          
                 switch (expectedResult,retriveResult) {
-                case (.empty,.empty):
+                case (.empty,.empty),(.failure,.failure):
                     break
                     
                 case let(.found(expectedFeed, expectedTimeStamp),.found(retrievedFeed, retriveTimeStamp)):
