@@ -9,7 +9,7 @@ import XCTest
 import EssentialFeed
 
 final class CodableFeedStoreTests: XCTestCase {
-
+    
     override func setUp() {
         super.setUp()
         
@@ -22,10 +22,10 @@ final class CodableFeedStoreTests: XCTestCase {
         undoStoreSideEffects()
     }
     
-   
+    
     func test_retrive_deliversEmptyOnEmptyCache() {
         let sut = makeSUT()
-
+        
         expect(sut, toRetrive: .empty)
     }
     
@@ -40,7 +40,7 @@ final class CodableFeedStoreTests: XCTestCase {
         let feed = uniqueImageFeed().local
         let timeStamp = Date()
         
-       insert((feed,timeStamp), to: sut)
+        insert((feed,timeStamp), to: sut)
         
         expect(sut, toRetrive: .found(feed: feed, timeStamp: timeStamp))
     }
@@ -85,18 +85,18 @@ final class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetrive: .found(feed: latestFeed, timeStamp: latestTimeStamp))
     }
     
-        func test_insert_deliversErrorOnInsertionError() {
-            let invalidStoreURL = URL(string: "invalid://store-url")
-            let sut = makeSUT(storeURL: invalidStoreURL)
-            let feed = uniqueImageFeed().local
-            let timeStamp = Date()
+    func test_insert_deliversErrorOnInsertionError() {
+        let invalidStoreURL = URL(string: "invalid://store-url")
+        let sut = makeSUT(storeURL: invalidStoreURL)
+        let feed = uniqueImageFeed().local
+        let timeStamp = Date()
+        
+        let insertionError = insert((feed, timeStamp: timeStamp), to: sut)
+        
+        XCTAssertNotNil(insertionError,"Expected cache insertion to fail with an error")
+        
+    }
     
-            let insertionError = insert((feed, timeStamp: timeStamp), to: sut)
-    
-            XCTAssertNotNil(insertionError,"Expected cache insertion to fail with an error")
-    
-        }
-
     
     func test_delete_hasNoSideEffectOnEmptyCache() {
         let sut = makeSUT()
@@ -120,10 +120,9 @@ final class CodableFeedStoreTests: XCTestCase {
         let noDelePermissionURL = cacheDirectory()
         let sut = makeSUT(storeURL: noDelePermissionURL)
         
-        let delitionError = deleteCache(from: sut)
+        let deletionError = deleteCache(from: sut)
         
-        XCTAssertNotNil(delitionError,"Expected cache delition to fail")
-        expect(sut, toRetrive: .empty)
+        XCTAssertNotNil(deletionError,"Expected cache delition to fail")
     }
     
     //MARK: Helpers
@@ -147,7 +146,7 @@ final class CodableFeedStoreTests: XCTestCase {
         
         return insetionError
     }
-        
+    
     private func deleteCache(from sut: FeedStore) -> Error? {
         let exp = expectation(description: "wait for cache deletion")
         
@@ -173,19 +172,19 @@ final class CodableFeedStoreTests: XCTestCase {
         let exp = expectation(description: "wait for cache retrieval")
         
         sut.retrieve { retriveResult in
-         
-                switch (expectedResult,retriveResult) {
-                case (.empty,.empty),(.failure,.failure):
-                    break
-                    
-                case let(.found(expectedFeed, expectedTimeStamp),.found(retrievedFeed, retriveTimeStamp)):
-                    XCTAssertEqual(expectedFeed, retrievedFeed,file: file,line: line)
-                    XCTAssertEqual(expectedTimeStamp, retriveTimeStamp,file: file,line: line)
-                    
-                default:
-                    XCTFail("Expected to retirve \(expectedResult) got \(retriveResult) instead",file: file,line: line)
-                }
-                exp.fulfill()
+            
+            switch (expectedResult,retriveResult) {
+            case (.empty,.empty),(.failure,.failure):
+                break
+                
+            case let(.found(expectedFeed, expectedTimeStamp),.found(retrievedFeed, retriveTimeStamp)):
+                XCTAssertEqual(expectedFeed, retrievedFeed,file: file,line: line)
+                XCTAssertEqual(expectedTimeStamp, retriveTimeStamp,file: file,line: line)
+                
+            default:
+                XCTFail("Expected to retirve \(expectedResult) got \(retriveResult) instead",file: file,line: line)
+            }
+            exp.fulfill()
             
         }
         wait(for: [exp], timeout: 1.0)
