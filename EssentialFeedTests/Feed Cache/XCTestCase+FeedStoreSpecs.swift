@@ -113,6 +113,24 @@ extension FeedStoreSpecs where Self: XCTestCase {
         expect(sut, toRetriveTwice: .failure(anyNSError()),file: file,line: line)
     }
     
+    func assertThatInsertDeliversErrorOnInsertionError(_ sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        let feed = uniqueImageFeed().local
+        let timeStamp = Date()
+        
+        let insertionError = insert((feed, timeStamp: timeStamp), to: sut)
+        
+        XCTAssertNotNil(insertionError,"Expected cache insertion to fail with an error",file: file,line: line)
+    }
+    
+    func assertThatInsertHasNoSideEffectsOnInsertionError(_ sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        let feed = uniqueImageFeed().local
+        let timeStamp = Date()
+        
+        insert((feed, timeStamp: timeStamp), to: sut)
+        
+        expect(sut, toRetrive: .empty,file: file,line: line)
+    }
+    
     @discardableResult
     func insert(_ cache: (feed: [LocalFeedImage], timeStamp: Date), to sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) -> Error? {
         
