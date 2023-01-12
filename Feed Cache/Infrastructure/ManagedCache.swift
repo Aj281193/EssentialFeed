@@ -12,6 +12,12 @@ class ManagedCache: NSManagedObject {
     @NSManaged var timeStamp: Date
     @NSManaged var feed: NSOrderedSet
     
+    var localFeed: [LocalFeedImage] {
+        return feed.compactMap { ($0 as? ManagedFeedImage)?.local }
+    }
+}
+
+extension ManagedCache {
     static func newUniqueInstance(in context: NSManagedObjectContext) throws -> ManagedCache  {
         try find(in: context).map(context.delete)
         return ManagedCache(context: context)
@@ -23,8 +29,4 @@ class ManagedCache: NSManagedObject {
         return try context.fetch(request).first
     }
     
-    var localFeed: [LocalFeedImage] {
-        return feed.compactMap { ($0 as? ManagedFeedImage)?.local }
-    }
 }
-
