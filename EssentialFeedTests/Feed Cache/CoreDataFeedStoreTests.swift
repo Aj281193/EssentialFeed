@@ -47,7 +47,9 @@ final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
     }
     
     func test_insert_overidesPreviouslyInsertedCacheValue() {
+        let sut = makeSUT()
         
+        assertThatInsertOveridesPreviouslyInsertedCacheValue(sut)
     }
     
     func test_delete_deliversNoErrorOnEmptyCache() {
