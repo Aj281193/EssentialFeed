@@ -33,12 +33,7 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         let sutToPerformLoad = makeSUT()
         let feed = uniqueImageFeed().models
         
-        let saveExp = expectation(description: "wait for save completion")
-        sutToPerformSave.save(feed) { saveError in
-            XCTAssertNil(saveError, "Expected to saveFeedSuccessFully")
-            saveExp.fulfill()
-        }
-        wait(for: [saveExp], timeout: 1.0)
+        save(feed, with: sutToPerformSave)
         
         expect(sutToPerformLoad, toLoad: feed)
     }
@@ -47,24 +42,11 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         let sutToPerformFirstSave = makeSUT()
         let sutToPerformLatestSave = makeSUT()
         let sutToPerformLoad = makeSUT()
-        
         let firstFeed = uniqueImageFeed().models
         let latestfeed = uniqueImageFeed().models
         
-        let saveExpr1 = expectation(description: "wait for first completion")
-        sutToPerformFirstSave.save(firstFeed) { saveError in
-            XCTAssertNil(saveError, "Expected to save feed successfully")
-            saveExpr1.fulfill()
-        }
-        wait(for: [saveExpr1], timeout: 1.0)
-        
-        let saveExpr2 = expectation(description: "wait for 2nd completion")
-        sutToPerformLatestSave.save(latestfeed) { saveError in
-            XCTAssertNil(saveError, "Expected to save feed successfully")
-            saveExpr2.fulfill()
-        }
-        
-        wait(for: [saveExpr2], timeout: 1.0)
+        save(firstFeed, with: sutToPerformFirstSave)
+        save(latestfeed, with: sutToPerformLatestSave)
         
         expect(sutToPerformLoad, toLoad: latestfeed)
     }
@@ -100,6 +82,15 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func save(_ feed: [FeedImage], with sut: LocalFeedLoader, file: StaticString = #filePath, line: UInt = #line) {
+        let saveExp = expectation(description: "wait for save completion")
+        sut.save(feed) { saveError in
+            XCTAssertNil(saveError, file: file, line: line)
+            saveExp.fulfill()
+        }
+        wait(for: [saveExp], timeout: 1.0)
     }
     
     func deleteArtifact() {
