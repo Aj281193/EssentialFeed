@@ -24,7 +24,7 @@ public final class RemoteFeedLoader: FeedLoader {
     }
     
    
-    public typealias Result = FeedLoaderResult
+    public typealias Result = FeedLoader.Result
     
     public func load(completion: @escaping (Result) -> Void) {
         client.get(from: url) {[weak self] result in
