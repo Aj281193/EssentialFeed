@@ -14,10 +14,10 @@ public protocol FeedStore {
     typealias RetrievalResult = Result<CacheFeed?, Error>
     typealias RetrievalCompletion = (RetrievalResult) -> Void
     
-    typealias InsertionResult = Error?
+    typealias InsertionResult = Result<Void,Error>
     typealias InsertionCompletion = (InsertionResult) -> Void
     
-    typealias DelitionResult = Error?
+    typealias DelitionResult = Result<Void,Error>
     typealias DeletionCompletion = (DelitionResult) -> Void
     
     /// The completion Handler can be invoked in any thread.
