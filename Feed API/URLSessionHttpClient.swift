@@ -16,32 +16,37 @@ public class URLSessionHttpClient: HTTPClient {
     
     struct UnexpectedValuesRepresentaion: Error {}
     
-    public func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
+    public func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
         session.dataTask(with: url) { data,response,error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data , let response = response as? HTTPURLResponse {
-                completion(.success(data, response))
-            }
-            else {
-                completion(.failure(UnexpectedValuesRepresentaion()))
-            }
+            completion(Result {
+                if let error = error {
+                    throw error
+                } else if let data = data , let response = response as? HTTPURLResponse {
+                    return (data, response)
+                }
+                else {
+                    throw UnexpectedValuesRepresentaion()
+                }
+            })
+           
         }.resume()
     }
     
-    public func post(_ data: Data,to url: URL, completion: @escaping (HTTPClientResult) -> Void) {
+    public func post(_ data: Data,to url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = data
         
         session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data, let response = response as? HTTPURLResponse {
-                completion(.success(data, response))
-            } else {
-                completion(.failure(UnexpectedValuesRepresentaion()))
-            }
+            completion(Result {
+                if let error = error {
+                    throw error
+                } else if let data = data, let response = response as? HTTPURLResponse {
+                    return (data, response)
+                } else {
+                    throw UnexpectedValuesRepresentaion()
+                }
+            })
         }.resume()
     }
 }

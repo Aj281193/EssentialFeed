@@ -18,15 +18,16 @@ public final class LocalFeedLoader {
 }
 
 extension LocalFeedLoader {
-    public typealias saveResult = Error?
+    public typealias saveResult = Result<Void,Error>
    
     public func save(_ feed: [FeedImage], completion: @escaping (saveResult) -> Void) {
-        store.deleteCacheFeed() { [weak self] error in
+        store.deleteCacheFeed() { [weak self] deletionResult in
             guard let self = self else { return }
-            if let cacheDeletionError = error {
-                completion(cacheDeletionError)
-            } else {
+            switch deletionResult {
+            case .success:
                 self.cache(feed, with: completion)
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
@@ -38,8 +39,8 @@ extension LocalFeedLoader {
     }
 }
 
-extension LocalFeedLoader {
-    public typealias LoadResult = FeedLoaderResult
+extension LocalFeedLoader: FeedLoader {
+    public typealias LoadResult = FeedLoader.Result
     
     public func load(completion: @escaping (LoadResult) -> Void) {
         store.retrieve { [weak self] result in
@@ -47,16 +48,16 @@ extension LocalFeedLoader {
             switch result {
             case let .failure(error):
                 completion(.failure(error))
-            case let .found(feed, timeStamp) where FeedCachePolicy.validate(timeStamp, against: self.currentDate()):
-                completion(.success(feed.toModel()))
-            case .found , .empty:
+            case let .success(.some(cache)) where FeedCachePolicy.validate(cache.timeStamp, against: self.currentDate()):
+                completion(.success(cache.feed.toModel()))
+            case .success:
                 completion(.success([]))
             }
         }
     }
 }
 
-extension LocalFeedLoader: FeedLoader {
+extension LocalFeedLoader {
     
     public func validateCache() {
         store.retrieve { [weak self] result in
@@ -64,9 +65,9 @@ extension LocalFeedLoader: FeedLoader {
             switch result {
             case .failure:
                 self.store.deleteCacheFeed { _ in }
-            case let .found(_, timeStamp) where !FeedCachePolicy.validate(timeStamp, against: self.currentDate()):
+            case let .success(.some(cache)) where !FeedCachePolicy.validate(cache.timeStamp, against: self.currentDate()):
                 self.store.deleteCacheFeed { _ in }
-            case .empty,.found: break
+            case .success(.none),.success(.some): break
             }
         }
     }
