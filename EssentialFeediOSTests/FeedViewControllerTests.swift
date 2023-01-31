@@ -98,6 +98,23 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [image0.url,image1.url], "Expected second image URL request once the second view is visible")
     }
     
+    func test_feedImageView_cancelsImageLoadingWhenNotVisibleAnyMore() {
+        let image0 = makeImage(url: URL(string: "https://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "https://url-1.com")!)
+        
+        let (sut,loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        loader.completeFeedLoading(with: [image0, image1], at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no image URL request until view become visible")
+        
+        sut.simulatedFeedImageViewNotVisible(at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected first image URL request once the first view is not visible")
+        
+        sut.simulatedFeedImageViewNotVisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url,image1.url], "Expected second image URL request once the second view is not visible")
+    }
+    
     //Mark:- Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: LoaderSpy) {
@@ -137,7 +154,7 @@ final class FeedViewControllerTests: XCTestCase {
     }
     
     class LoaderSpy: FeedLoader, FeedImageDataLoader {
-    
+     
         //MARK: FeedLoader
         private var feedRequests = [(FeedLoader.Result) -> Void]()
        
@@ -161,28 +178,44 @@ final class FeedViewControllerTests: XCTestCase {
         //MARK: ImageDataLoader
         
         private(set) var loadedImageURLs = [URL]()
+        private(set) var cancelledImageURLs = [URL]()
         
         func loadImageData(from url: URL) {
             loadedImageURLs.append(url)
         }
+        
+        func cancelImageDataLoad(from url: URL) {
+            cancelledImageURLs.append(url)
+        }
+        
     }
 }
 
 private extension FeedViewController {
-    func simulateUserInitiatedFeedReload() {
-        refreshControl?.simulatePullToRefresh()
-    }
     
     var isShowingLoadingIndicator: Bool {
         return refreshControl?.isRefreshing == true
+    }
+    
+    func simulateUserInitiatedFeedReload() {
+        refreshControl?.simulatePullToRefresh()
     }
     
     func numbderOfRenderFeedImageView() -> Int {
         return tableView.numberOfRows(inSection: feedImageSection)
     }
     
-    func simulatedFeedImageViewVisible(at index: Int) {
-        _ = feedImageView(at: index)
+    @discardableResult
+    func simulatedFeedImageViewVisible(at index: Int)  -> FeedImageCell? {
+        return feedImageView(at: index) as? FeedImageCell
+    }
+    
+    func simulatedFeedImageViewNotVisible(at row: Int) {
+        let view = simulatedFeedImageViewVisible(at: row)
+        
+        let delegate = tableView.delegate
+        let index = IndexPath(row: row, section: feedImageSection)
+        delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
     }
     
     func feedImageView(at row: Int) -> UITableViewCell? {
