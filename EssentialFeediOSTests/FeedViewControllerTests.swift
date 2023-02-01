@@ -164,6 +164,29 @@ final class FeedViewControllerTests: XCTestCase {
         
     }
     
+    func test_feedImageviewRetryButton_isVisibleOnImageURLLoadError() {
+        let (sut,loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [makeImage(),makeImage()])
+        
+        let view0 = sut.simulatedFeedImageViewVisible(at: 0)
+        let view1 = sut.simulatedFeedImageViewVisible(at: 1)
+        
+        XCTAssertEqual(view0?.isShowingRetryAction, false, "Expected no retry action for first view while loading the first image")
+        XCTAssertEqual(view1?.isShowingRetryAction, false, "Expected no retry action for second view while loading the second image")
+        
+        let imageData = UIImage.make(withColor: .red).pngData()!
+        loader.completeImageLoading(with: imageData, at: 0)
+        XCTAssertEqual(view0?.isShowingRetryAction, false, "Expected no retry action for first view once the first image loading completed successfully")
+        XCTAssertEqual(view1?.isShowingRetryAction, false, "Expected no retry action state change for second view once the first image loading completes successfully")
+        
+        
+        loader.completeImageLoadingWithError(at: 1)
+        XCTAssertEqual(view0?.isShowingRetryAction, false, "Expected no retry action state change for first view once the second image loading completes with error")
+        XCTAssertEqual(view1?.isShowingRetryAction, true, "Expected  retry action for second view once the second image loading complete with Error")
+        
+    }
     
     //Mark:- Helpers
     
@@ -253,6 +276,12 @@ final class FeedViewControllerTests: XCTestCase {
             imageRequest[index].completion(.success(imageData))
         }
         
+        func completeImageLoadingWithError( at index: Int) {
+            let error = NSError(domain: "any Error", code: 0)
+            imageRequest[index].completion(.failure(error))
+        }
+        
+        
         func completedImageLoadingWithError(at index: Int) {
             let error = NSError(domain: "any error", code: 0)
             imageRequest[index].completion(.failure(error))
@@ -301,6 +330,10 @@ private extension FeedViewController {
 private extension FeedImageCell {
     var isShowingLocation: Bool {
         return !locationContainer.isHidden
+    }
+    
+    var isShowingRetryAction: Bool {
+        return !feedImageRetryButton.isHidden
     }
     
     var isShowingImageLoadingIndicator: Bool {
