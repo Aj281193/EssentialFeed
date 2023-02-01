@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "257F4534-10BC-4BDE-B9BA-7B79D4CEA74B"
+            uuid = "9566383A-8128-48DA-96C7-44A97B9369B1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EssentialFeediOS/FeedViewController.swift"
+            filePath = "EssentialFeediOSTests/FeedViewControllerTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9321C45B-3BA5-4E6D-9F42-F2B25B0BB348"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialFeediOS/FeedViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "test_feedImageView_renderImageLoadedFromURL()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
