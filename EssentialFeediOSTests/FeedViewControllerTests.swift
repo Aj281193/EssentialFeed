@@ -245,6 +245,23 @@ final class FeedViewControllerTests: XCTestCase {
         
     }
     
+    func test_feedImageView_cancelsImageURLPreloadingWhenNotNearVisibleAnymore() {
+        let image0 = makeImage(url: URL(string: "https://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "https://url-1.com")!)
+        let (sut,loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [image0,image1])
+        XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL request until  image is not near visible")
+        
+        sut.simulatedFeedImageViewNotNearVisible(at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected first cancelled image URL request once the frist image is not near visible anymore")
+        
+        sut.simulatedFeedImageViewNotNearVisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url,image1.url], "Expected second cancelled image URL request once the second image is not near visible anymore")
+        
+    }
+    
     //Mark:- Helpers
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
@@ -361,6 +378,14 @@ private extension FeedViewController {
         ds?.tableView(tableView, prefetchRowsAt: [indexPath])
     }
     
+    func simulatedFeedImageViewNotNearVisible(at row: Int) {
+        simulatedFeedImageViewVNearVisible(at: row)
+        
+        let ds = tableView.prefetchDataSource
+        let indexPath = IndexPath(row: row, section: feedImageSection)
+        ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [indexPath])
+    }
+    
     func numbderOfRenderFeedImageView() -> Int {
         return tableView.numberOfRows(inSection: feedImageSection)
     }
@@ -377,6 +402,7 @@ private extension FeedViewController {
         let index = IndexPath(row: row, section: feedImageSection)
         delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
     }
+    
     
     func feedImageView(at row: Int) -> UITableViewCell? {
         let ds = tableView.dataSource
