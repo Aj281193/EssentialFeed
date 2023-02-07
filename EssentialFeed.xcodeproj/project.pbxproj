@@ -182,6 +182,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		952C3A9B2992BF9C00EC864B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				952F7553298807BF00E91793 /* FeedImageCell.swift */,
+				95EB33A629898E5E0091CAD7 /* UIView+Shimmering.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		952C3A9C2992BFC900EC864B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				958FDD37298449B100B97D8E /* FeedViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		952C3A9D2992C00A00EC864B /* Feed UI */ = {
+			isa = PBXGroup;
+			children = (
+				952C3A9C2992BFC900EC864B /* Controllers */,
+				952C3A9B2992BF9C00EC864B /* Views */,
+			);
+			path = "Feed UI";
+			sourceTree = "<group>";
+		};
 		952C8002297090C700BA5E6F /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,9 +223,7 @@
 		952DEE4E29827EB600924576 /* EssentialFeediOS */ = {
 			isa = PBXGroup;
 			children = (
-				958FDD37298449B100B97D8E /* FeedViewController.swift */,
-				952F7553298807BF00E91793 /* FeedImageCell.swift */,
-				95EB33A629898E5E0091CAD7 /* UIView+Shimmering.swift */,
+				952C3A9D2992C00A00EC864B /* Feed UI */,
 			);
 			path = EssentialFeediOS;
 			sourceTree = "<group>";
