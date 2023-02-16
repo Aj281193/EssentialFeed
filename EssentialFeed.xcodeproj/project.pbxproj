@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		95150E7B2982FF5300538EDF /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95150E7A2982FF5300538EDF /* FeedViewControllerTests.swift */; };
-		9522E73C29977DAC0026E3EC /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9522E73B29977DAC0026E3EC /* FeedViewModel.swift */; };
 		952C3AA02992C0C400EC864B /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952C3A9F2992C0C400EC864B /* FeedImageDataLoader.swift */; };
 		952C3AA22992C72300EC864B /* FeedRefreshViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952C3AA12992C72300EC864B /* FeedRefreshViewController.swift */; };
 		952C3AA42992D45F00EC864B /* FeedImageCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952C3AA32992D45F00EC864B /* FeedImageCellController.swift */; };
@@ -95,7 +94,6 @@
 
 /* Begin PBXFileReference section */
 		95150E7A2982FF5300538EDF /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
-		9522E73B29977DAC0026E3EC /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		952C3A9F2992C0C400EC864B /* FeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoader.swift; sourceTree = "<group>"; };
 		952C3AA12992C72300EC864B /* FeedRefreshViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRefreshViewController.swift; sourceTree = "<group>"; };
 		952C3AA32992D45F00EC864B /* FeedImageCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCellController.swift; sourceTree = "<group>"; };
@@ -362,7 +360,6 @@
 		9588899E299EA1A900D669AE /* Feed Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				9522E73B29977DAC0026E3EC /* FeedViewModel.swift */,
 				9597D1F22997C92A003A266B /* FeedImageViewModel.swift */,
 				9588899F299EA25B00D669AE /* FeedPresenter.swift */,
 			);
@@ -686,7 +683,6 @@
 				952F7554298807BF00E91793 /* FeedImageCell.swift in Sources */,
 				9597D1F32997C92A003A266B /* FeedImageViewModel.swift in Sources */,
 				952C3AA42992D45F00EC864B /* FeedImageCellController.swift in Sources */,
-				9522E73C29977DAC0026E3EC /* FeedViewModel.swift in Sources */,
 				9585825529935C4B00AF5954 /* FeedUIComposer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
