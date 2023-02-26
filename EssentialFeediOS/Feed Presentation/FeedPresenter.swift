@@ -9,10 +9,6 @@ import Foundation
 import EssentialFeed
 
 
-struct FeedViewModel {
-    let feed: [FeedImage]
-}
-
 protocol FeedLoadingView {
     func display(_ viewModel: FeedLoadingViewModel)
 }
