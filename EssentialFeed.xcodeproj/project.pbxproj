@@ -62,6 +62,7 @@
 		95EE480C2973EA870032BA2E /* XCTestCase+TrackMemoryLeak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9562F938294F8F1C00EB3964 /* XCTestCase+TrackMemoryLeak.swift */; };
 		95EE480D2973EE9E0032BA2E /* FeedCacheTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956D98FD2960675200076FDF /* FeedCacheTestsHelper.swift */; };
 		95EE480E2973EEA60032BA2E /* SharedTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956D98FF2960690E00076FDF /* SharedTestsHelper.swift */; };
+		95FBD0AC29AB758700293FE4 /* UITableView+dequeuing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FBD0AB29AB758700293FE4 /* UITableView+dequeuing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +149,7 @@
 		95EC2D89295E981C007992E3 /* FeedStoreSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStoreSpy.swift; sourceTree = "<group>"; };
 		95EE48022973E3600032BA2E /* EssentialFeedCacheIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedCacheIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95EE48042973E3600032BA2E /* EssentialFeedCacheIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedCacheIntegrationTests.swift; sourceTree = "<group>"; };
+		95FBD0AB29AB758700293FE4 /* UITableView+dequeuing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+dequeuing.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 				95EB33A629898E5E0091CAD7 /* UIView+Shimmering.swift */,
 				95891F3829AB572200A376D9 /* Feed.storyboard */,
 				95891F3A29AB57BE00A376D9 /* Feed.xcassets */,
+				95FBD0AB29AB758700293FE4 /* UITableView+dequeuing.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -699,6 +702,7 @@
 				95EB33A729898E5E0091CAD7 /* UIView+Shimmering.swift in Sources */,
 				950E39C629A0F58400C40DD8 /* FeedImagePresenter.swift in Sources */,
 				958FDD38298449B100B97D8E /* FeedViewController.swift in Sources */,
+				95FBD0AC29AB758700293FE4 /* UITableView+dequeuing.swift in Sources */,
 				950B0D1E29A1642B00160496 /* FeedLoadingViewModel.swift in Sources */,
 				952F7554298807BF00E91793 /* FeedImageCell.swift in Sources */,
 				9597D1F32997C92A003A266B /* FeedImageViewModel.swift in Sources */,
