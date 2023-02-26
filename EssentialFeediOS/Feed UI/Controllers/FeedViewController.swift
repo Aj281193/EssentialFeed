@@ -9,23 +9,13 @@ import UIKit
 
 public final class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
 
-    private var refreshController: FeedRefreshViewController?
+    var refreshController: FeedRefreshViewController?
     var tableModel = [FeedImageCellController]() {
         didSet {
             tableView.reloadData()
         }
     }
- 
-    
-   init(refreshController: FeedRefreshViewController) {
-         self.refreshController = refreshController
-         super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
