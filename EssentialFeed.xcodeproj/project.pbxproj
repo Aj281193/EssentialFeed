@@ -116,6 +116,7 @@
 		9519626629AD249200A87C6C /* FeedViewControllerTestsHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTestsHelpers.swift; sourceTree = "<group>"; };
 		9519626929AD26D100A87C6C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
 		9519626B29AD275300A87C6C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
+		9519626C29AD27C500A87C6C /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Feed.strings; sourceTree = "<group>"; };
 		952C3A9F2992C0C400EC864B /* FeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoader.swift; sourceTree = "<group>"; };
 		952C3AA32992D45F00EC864B /* FeedImageCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCellController.swift; sourceTree = "<group>"; };
 		952C80032970940800BA5E6F /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
@@ -671,6 +672,7 @@
 				en,
 				Base,
 				"pt-BR",
+				el,
 			);
 			mainGroup = 95501C56294D037000267920;
 			productRefGroup = 95501C61294D037000267920 /* Products */;
@@ -866,6 +868,7 @@
 			children = (
 				9519626929AD26D100A87C6C /* en */,
 				9519626B29AD275300A87C6C /* pt-BR */,
+				9519626C29AD27C500A87C6C /* el */,
 			);
 			name = Feed.strings;
 			sourceTree = "<group>";
