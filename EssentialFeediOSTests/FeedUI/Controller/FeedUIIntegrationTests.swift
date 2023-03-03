@@ -9,8 +9,17 @@ import XCTest
 import EssentialFeed
 import EssentialFeediOS
 
-final class FeedViewControllerTests: XCTestCase {
+final class FeedUIIntegrationTests: XCTestCase {
 
+    func test_feedView_hasTitle() {
+        let (sut , _) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(sut.title, localized("FEED_VIEW_TITLE"))
+    }
+     
+
+    
     func test_loadFeedActions_requestFeedFromLoader() {
         let (sut,loader) = makeSUT()
         XCTAssertEqual(loader.loadFeedCallCount, 0, "Expected no loading request before view is loaded")
@@ -388,120 +397,3 @@ final class FeedViewControllerTests: XCTestCase {
     }
 }
 
-private extension FeedViewController {
-    
-    var isShowingLoadingIndicator: Bool {
-        return refreshControl?.isRefreshing == true
-    }
-    
-    func simulateUserInitiatedFeedReload() {
-        refreshControl?.simulatePullToRefresh()
-    }
-    
-    func simulatedFeedImageViewVNearVisible(at index: Int) {
-        let ds = tableView.prefetchDataSource
-        let indexPath = IndexPath(row: index, section: feedImageSection)
-        ds?.tableView(tableView, prefetchRowsAt: [indexPath])
-    }
-    
-    func simulatedFeedImageViewNotNearVisible(at row: Int) {
-        simulatedFeedImageViewVNearVisible(at: row)
-        
-        let ds = tableView.prefetchDataSource
-        let indexPath = IndexPath(row: row, section: feedImageSection)
-        ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [indexPath])
-    }
-    
-    func numbderOfRenderFeedImageView() -> Int {
-        return tableView.numberOfRows(inSection: feedImageSection)
-    }
-    
-    @discardableResult
-    func simulatedFeedImageViewVisible(at index: Int)  -> FeedImageCell? {
-        return feedImageView(at: index) as? FeedImageCell
-    }
-    
-    @discardableResult
-    func simulatedFeedImageViewNotVisible(at row: Int) -> FeedImageCell {
-        let view = simulatedFeedImageViewVisible(at: row)
-        
-        let delegate = tableView.delegate
-        let index = IndexPath(row: row, section: feedImageSection)
-        delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
-        return view!
-    }
-    
-    
-    func feedImageView(at row: Int) -> UITableViewCell? {
-        let ds = tableView.dataSource
-        let index = IndexPath(row: row, section: feedImageSection)
-        return ds?.tableView(tableView, cellForRowAt: index)
-    }
-    
-    private var feedImageSection: Int {
-        return 0
-    }
-}
-
-private extension FeedImageCell {
-    
-    func simulateRetryAction() {
-        feedImageRetryButton.simulateTap()
-    }
-    
-    var isShowingLocation: Bool {
-        return !locationContainer.isHidden
-    }
-    
-    var isShowingRetryAction: Bool {
-        return !feedImageRetryButton.isHidden
-    }
-    
-    var isShowingImageLoadingIndicator: Bool {
-        return feedImageContainer.isShimmering
-    }
-    var locationText: String? {
-        return locationLabel.text
-    }
-    
-    var descriptionText: String? {
-        return descriptionLabel.text
-    }
-    
-    var renderImage: Data? {
-        return feedImageView.image?.pngData()
-    }
-}
-
-private extension UIButton {
-    func simulateTap() {
-        allTargets.forEach { target in
-            actions(forTarget: target, forControlEvent: .touchUpInside)?.forEach {
-                (target as NSObject).perform(Selector($0))
-            }
-        }
-    }
-}
-
-private extension UIRefreshControl {
-    func simulatePullToRefresh() {
-        allTargets.forEach { target in
-            actions(forTarget: target, forControlEvent: .valueChanged)?.forEach {
-                (target as NSObject).perform(Selector($0))
-            }
-        }
-    }
-}
-
-private extension UIImage {
-    static func make(withColor color: UIColor) -> UIImage {
-        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-        let format = UIGraphicsImageRendererFormat()
-        format.scale = 1
-        
-        return UIGraphicsImageRenderer(size: rect.size, format: format).image { renderContext in
-            color.setFill()
-            renderContext.fill(rect)
-        }
-    }
-}
