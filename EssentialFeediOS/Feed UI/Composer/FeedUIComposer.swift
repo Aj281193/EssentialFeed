@@ -11,14 +11,17 @@ import EssentialFeed
 public final class FeedUIComposer {
     private init() {}
     public static func feedComposedWith(feedloader: FeedLoader, imageLoader: FeedImageDataLoader) -> FeedViewController {
-        let presentationAdapter = FeedLoaderPresentationAdapter(feedLoader: feedloader)
+        let presentationAdapter = FeedLoaderPresentationAdapter(feedLoader: MainQueueDispatchDecorator(decoratee: feedloader))
         let feedController = FeedViewController.makeWith(delegate: presentationAdapter, title: FeedPresenter.title)
       
-        presentationAdapter.presenter = FeedPresenter(feedview: FeedAdapter(controller: feedController, loader: imageLoader), loadingView: WeakRefVirtualProxy(feedController))
+        presentationAdapter.presenter = FeedPresenter(feedview: FeedAdapter(controller: feedController,
+                                                                            loader: MainQueueDispatchDecorator(decoratee: imageLoader)),
+                                                                            loadingView: WeakRefVirtualProxy(feedController))
        
         return feedController
     }
 }
+
 
 private extension FeedViewController {
     static func makeWith(delegate: FeedViewControllerDelegate, title: String) -> FeedViewController {

@@ -277,24 +277,52 @@ final class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [makeImage()])
         
         let view = sut.simulatedFeedImageViewNotVisible(at: 0)
-        loader.completeImageLoading(with: UIImage.make(withColor: .red).pngData()!, at: 0)
+        loader.completeImageLoading(with: anyImageData(), at: 0)
         
         XCTAssertNil(view.renderImage)
     }
     
     func test_feedImageView_doesNotShowDataFromPreviousRequestWhenCellIsReused() throws {
         let (sut, loader) = makeSUT()
-
+        
         sut.loadViewIfNeeded()
         loader.completeFeedLoading(with: [makeImage(), makeImage()])
-
+        
         let view0 = try XCTUnwrap(sut.simulatedFeedImageViewVisible(at: 0))
         view0.prepareForReuse()
-
+        
         let imageData0 = UIImage.make(withColor: .red).pngData()!
         loader.completeImageLoading(with: imageData0, at: 0)
-
+        
         XCTAssertEqual(view0.renderImage, .none, "Expected no image state change for reused view once image loading completes successfully")
+    }
+    
+    func test_loadFeedCompletion_dispatchesFromBackgroundToMainThread() {
+        let (sut,loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        let exp = expectation(description: "wait for background thread")
+        DispatchQueue.global().async {
+            loader.completeFeedLoading(at: 0)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_loadImageDataCompletion_dispatchFromBackgroundToMainThread() {
+        let (sut,loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        
+        loader.completeFeedLoading(with: [makeImage()])
+        _ = sut.simulatedFeedImageViewVisible(at: 0)
+        
+        let exp = expectation(description: "wait for background thread")
+        DispatchQueue.global().async {
+            loader.completeImageLoading(with: self.anyImageData(), at: 0)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
     }
     
     //Mark:- Helpers
@@ -332,6 +360,10 @@ final class FeedUIIntegrationTests: XCTestCase {
     
     private func makeImage(description: String? = nil, location: String? = nil, url: URL = URL(string: "http://any-url.com")!) -> FeedImage {
        return FeedImage(id: UUID(), description: description, location: location, url: url)
+    }
+    
+    private func anyImageData() -> Data {
+        return UIImage.make(withColor: .red).pngData()!
     }
     
     class LoaderSpy: FeedLoader, FeedImageDataLoader {
