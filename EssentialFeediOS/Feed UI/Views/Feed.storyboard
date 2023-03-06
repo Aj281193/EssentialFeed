@@ -19,25 +19,22 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IV4-ws-dr0">
-                                    <rect key="frame" x="10" y="10" width="373" height="14"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="18" id="i1X-xT-OJS"/>
-                                    </constraints>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APV-K3-OzY">
+                                    <rect key="frame" x="0.0" y="8" width="393" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" red="1" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstItem="IV4-ws-dr0" firstAttribute="top" secondItem="IKw-n5-8Ib" secondAttribute="top" constant="10" id="8IQ-Aq-TqN"/>
-                                <constraint firstAttribute="bottom" secondItem="IV4-ws-dr0" secondAttribute="bottom" constant="10" id="9PB-hj-Duy"/>
-                                <constraint firstItem="IV4-ws-dr0" firstAttribute="leading" secondItem="IKw-n5-8Ib" secondAttribute="leading" constant="10" id="f2S-dU-z3U"/>
-                                <constraint firstAttribute="trailing" secondItem="IV4-ws-dr0" secondAttribute="trailing" constant="10" id="lDn-Xq-rn5"/>
+                                <constraint firstItem="APV-K3-OzY" firstAttribute="top" secondItem="IKw-n5-8Ib" secondAttribute="top" constant="8" id="NnC-fn-XMY"/>
+                                <constraint firstAttribute="bottom" secondItem="APV-K3-OzY" secondAttribute="bottom" constant="8" id="QW6-mI-IBy"/>
+                                <constraint firstAttribute="trailing" secondItem="APV-K3-OzY" secondAttribute="trailing" id="vwG-Dv-JYi"/>
+                                <constraint firstItem="APV-K3-OzY" firstAttribute="leading" secondItem="IKw-n5-8Ib" secondAttribute="leading" id="wz8-Xb-WOZ"/>
                             </constraints>
                             <connections>
-                                <outlet property="label" destination="IV4-ws-dr0" id="e1J-1E-wwT"/>
+                                <outlet property="label" destination="APV-K3-OzY" id="x95-RY-UjE"/>
                             </connections>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="UST-lQ-sVE">
@@ -168,7 +165,7 @@
                         </connections>
                     </refreshControl>
                     <connections>
-                        <outlet property="errorView" destination="IKw-n5-8Ib" id="W0c-aK-AXF"/>
+                        <outlet property="errorView" destination="IKw-n5-8Ib" id="d7E-YO-Ra9"/>
                         <outlet property="refreshController" destination="gRG-2d-IoB" id="8gH-uD-H3s"/>
                     </connections>
                 </tableViewController>
