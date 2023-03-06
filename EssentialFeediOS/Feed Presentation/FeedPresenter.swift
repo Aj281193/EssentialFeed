@@ -23,7 +23,6 @@ protocol FeedView {
 }
 
 
-
 protocol FeedErrorView {
     func display(_ viewModel: FeedErrorViewModel)
 }

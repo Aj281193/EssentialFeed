@@ -282,11 +282,8 @@
 			children = (
 				959FAADA29B662D2007E9067 /* Helpers */,
 				952F7553298807BF00E91793 /* FeedImageCell.swift */,
-				95EB33A629898E5E0091CAD7 /* UIView+Shimmering.swift */,
 				95891F3829AB572200A376D9 /* Feed.storyboard */,
 				95891F3A29AB57BE00A376D9 /* Feed.xcassets */,
-				95FBD0AB29AB758700293FE4 /* UITableView+dequeuing.swift */,
-				95FBD0AD29AB787300293FE4 /* UIImageView+Animation.swift */,
 				95ED6D7329B634EC00EA61E5 /* ErrorView.swift */,
 			);
 			path = Views;
@@ -489,6 +486,9 @@
 		959FAADA29B662D2007E9067 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				95FBD0AD29AB787300293FE4 /* UIImageView+Animation.swift */,
+				95FBD0AB29AB758700293FE4 /* UITableView+dequeuing.swift */,
+				95EB33A629898E5E0091CAD7 /* UIView+Shimmering.swift */,
 				959FAADB29B662F6007E9067 /* UIRefreshControl+Helpers.swift */,
 			);
 			path = Helpers;
