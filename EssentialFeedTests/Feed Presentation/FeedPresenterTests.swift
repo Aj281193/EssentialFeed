@@ -60,7 +60,7 @@ final class FeedPresenterTests: XCTestCase {
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line)  -> (sut: FeedPresenter, view: ViewSpy) {
         let view = ViewSpy()
         
-        let sut = FeedPresenter(errorView: view, loadingView: view, feedview: view)
+        let sut = FeedPresenter(feedview: view, loadingView: view, errorView: view)
         trackForMemoryLeak(sut,file: file,line: line)
         trackForMemoryLeak(view, file: file,line: line)
         return (sut,view)
