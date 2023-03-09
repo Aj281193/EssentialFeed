@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9500A50329BA4A4A00A0550B /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9500A50229BA4A4A00A0550B /* FeedPresenter.swift */; };
-		9500A50629BA4E4F00A0550B /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9500A50829BA4E4F00A0550B /* Feed.strings */; };
+		9500A50B29BA514D00A0550B /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9500A50829BA4E4F00A0550B /* Feed.strings */; };
 		950B0D1E29A1642B00160496 /* FeedLoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950B0D1D29A1642B00160496 /* FeedLoadingViewModel.swift */; };
 		950E39C629A0F58400C40DD8 /* FeedImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950E39C529A0F58400C40DD8 /* FeedImagePresenter.swift */; };
 		95150E7B2982FF5300538EDF /* FeedUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95150E7A2982FF5300538EDF /* FeedUIIntegrationTests.swift */; };
@@ -265,6 +265,7 @@
 		9500A50129BA4A2C00A0550B /* Feed Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				9500A50829BA4E4F00A0550B /* Feed.strings */,
 				9500A50229BA4A4A00A0550B /* FeedPresenter.swift */,
 			);
 			path = "Feed Presentation";
@@ -540,7 +541,6 @@
 			isa = PBXGroup;
 			children = (
 				95B39A9129B7A9540013CCB9 /* FeedPresenterTests.swift */,
-				9500A50829BA4E4F00A0550B /* Feed.strings */,
 			);
 			path = "Feed Presentation";
 			sourceTree = "<group>";
@@ -795,6 +795,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9500A50B29BA514D00A0550B /* Feed.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,7 +803,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9500A50629BA4E4F00A0550B /* Feed.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
