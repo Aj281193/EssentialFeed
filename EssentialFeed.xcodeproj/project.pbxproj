@@ -49,7 +49,7 @@
 		95751CE529BBB267002F4477 /* FeedImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95751CE429BBB267002F4477 /* FeedImagePresenter.swift */; };
 		95751CE729BBB370002F4477 /* FeedImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95751CE629BBB370002F4477 /* FeedImageViewModel.swift */; };
 		95751CE929BBB398002F4477 /* FeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95751CE829BBB398002F4477 /* FeedImageView.swift */; };
-		95751D0129BBBFE8002F4477 /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95751D0329BBBFE8002F4477 /* Feed.strings */; };
+		95751CEC29BBBC2A002F4477 /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95751CEE29BBBC2A002F4477 /* Feed.strings */; };
 		9585825529935C4B00AF5954 /* FeedUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9585825429935C4B00AF5954 /* FeedUIComposer.swift */; };
 		95891F3929AB572200A376D9 /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95891F3829AB572200A376D9 /* Feed.storyboard */; };
 		95891F3B29AB57BE00A376D9 /* Feed.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95891F3A29AB57BE00A376D9 /* Feed.xcassets */; };
@@ -184,9 +184,9 @@
 		95751CE429BBB267002F4477 /* FeedImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImagePresenter.swift; sourceTree = "<group>"; };
 		95751CE629BBB370002F4477 /* FeedImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageViewModel.swift; sourceTree = "<group>"; };
 		95751CE829BBB398002F4477 /* FeedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageView.swift; sourceTree = "<group>"; };
-		95751D0229BBBFE8002F4477 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
-		95751D0429BBBFF4002F4477 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Feed.strings; sourceTree = "<group>"; };
-		95751D0529BBC004002F4477 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
+		95751CED29BBBC2A002F4477 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
+		95751CEF29BBBC3A002F4477 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Feed.strings; sourceTree = "<group>"; };
+		95751CF029BBBC4A002F4477 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
 		9585825429935C4B00AF5954 /* FeedUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedUIComposer.swift; sourceTree = "<group>"; };
 		95891F3829AB572200A376D9 /* Feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feed.storyboard; sourceTree = "<group>"; };
 		95891F3A29AB57BE00A376D9 /* Feed.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Feed.xcassets; sourceTree = "<group>"; };
@@ -274,7 +274,7 @@
 				95751CE429BBB267002F4477 /* FeedImagePresenter.swift */,
 				9500A50229BA4A4A00A0550B /* FeedPresenter.swift */,
 				9500A50C29BA51E800A0550B /* View */,
-				95751D0329BBBFE8002F4477 /* Feed.strings */,
+				95751CEE29BBBC2A002F4477 /* Feed.strings */,
 			);
 			path = "Feed Presentation";
 			sourceTree = "<group>";
@@ -796,7 +796,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95751D0129BBBFE8002F4477 /* Feed.strings in Resources */,
+				95751CEC29BBBC2A002F4477 /* Feed.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,12 +966,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		95751D0329BBBFE8002F4477 /* Feed.strings */ = {
+		95751CEE29BBBC2A002F4477 /* Feed.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				95751D0229BBBFE8002F4477 /* en */,
-				95751D0429BBBFF4002F4477 /* el */,
-				95751D0529BBC004002F4477 /* pt-BR */,
+				95751CED29BBBC2A002F4477 /* en */,
+				95751CEF29BBBC3A002F4477 /* el */,
+				95751CF029BBBC4A002F4477 /* pt-BR */,
 			);
 			name = Feed.strings;
 			sourceTree = "<group>";
