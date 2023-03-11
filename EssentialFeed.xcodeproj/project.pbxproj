@@ -267,6 +267,7 @@
 			children = (
 				95751CE429BBB267002F4477 /* FeedImagePresenter.swift */,
 				9500A50C29BA51E800A0550B /* View */,
+				95B06E4029BC78350024819A /* FeedPresenter.swift */,
 			);
 			path = "Feed Presentation";
 			sourceTree = "<group>";
