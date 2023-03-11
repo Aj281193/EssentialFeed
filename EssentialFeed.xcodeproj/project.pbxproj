@@ -48,7 +48,6 @@
 		95751CE729BBB370002F4477 /* FeedImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95751CE629BBB370002F4477 /* FeedImageViewModel.swift */; };
 		95751CE929BBB398002F4477 /* FeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95751CE829BBB398002F4477 /* FeedImageView.swift */; };
 		95751D0629BBC31D002F4477 /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9500A50229BA4A4A00A0550B /* FeedPresenter.swift */; };
-		95751D0729BBC327002F4477 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9500A50D29BA51F700A0550B /* FeedViewModel.swift */; };
 		9585825529935C4B00AF5954 /* FeedUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9585825429935C4B00AF5954 /* FeedUIComposer.swift */; };
 		95891F3929AB572200A376D9 /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95891F3829AB572200A376D9 /* Feed.storyboard */; };
 		95891F3B29AB57BE00A376D9 /* Feed.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95891F3A29AB57BE00A376D9 /* Feed.xcassets */; };
@@ -141,7 +140,6 @@
 
 /* Begin PBXFileReference section */
 		9500A50229BA4A4A00A0550B /* FeedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenter.swift; sourceTree = "<group>"; };
-		9500A50D29BA51F700A0550B /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		9500A50F29BA521400A0550B /* FeedLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoadingView.swift; sourceTree = "<group>"; };
 		9500A51129BA522C00A0550B /* FeedLoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoadingViewModel.swift; sourceTree = "<group>"; };
 		9500A51329BA524300A0550B /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -281,7 +279,6 @@
 		9500A50C29BA51E800A0550B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9500A50D29BA51F700A0550B /* FeedViewModel.swift */,
 				9500A50F29BA521400A0550B /* FeedLoadingView.swift */,
 				9500A51129BA522C00A0550B /* FeedLoadingViewModel.swift */,
 				9500A51329BA524300A0550B /* FeedView.swift */,
@@ -861,7 +858,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95751D0729BBC327002F4477 /* FeedViewModel.swift in Sources */,
 				95751D0629BBC31D002F4477 /* FeedPresenter.swift in Sources */,
 				952C80042970940800BA5E6F /* CoreDataHelper.swift in Sources */,
 				955975D3294DDDED00153928 /* FeedItemsMapper.swift in Sources */,
