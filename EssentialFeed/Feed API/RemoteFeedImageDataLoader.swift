@@ -42,22 +42,17 @@ public final class RemoteFeedImageDataLoader: FeedImageDataLoader {
             completion = nil
         }
     }
- 
-    @discardableResult
+    
     public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
         let task = HTTPClientTaskWrapper(completion: completion)
        
         task.wrapped = client.get(from: url) { [weak self] result in
             guard self != nil else { return }
-            switch result {
-            case  let .success((data,response)):
-                if response.statusCode == 200 , !data.isEmpty {
-                    task.completed(with: .success(data))
-                } else {
-                    task.completed(with: .failure(Error.invalidData))
-                }
-            case .failure: task.completed(with: .failure(Error.connectivity))
-            }
+            task.completed(with: result.mapError { _ in Error.connectivity}.flatMap { (data, response) in
+                let isValidResponse = response.statusCode == 200 && !data.isEmpty
+                
+                return isValidResponse ? .success(data) : .failure(Error.invalidData)
+            })
         }
         return task
     }
