@@ -64,6 +64,8 @@ Given the customer doesn't have connectivity
 
 #### Data:
 - Max age
+
+
 ### Load Feed From Cache Use Case
 
 #### Primary course:
@@ -179,4 +181,4 @@ UX goals for the Feed UI experience
 1. System delivers error.
 
 #### Empty cache course (sad path):
-1. System delivers no image data.
+1. System delivers no found error.
