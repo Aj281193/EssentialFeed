@@ -9,6 +9,7 @@ import Foundation
 
 public final class LocalFeedImageDataLoader: FeedImageDataLoader {
         
+        public typealias SaveResult = Result<Void,Swift.Error>
         private final class Task: FeedImageDataLoaderTask {
         private var completion: ((FeedImageDataLoader.Result) -> Void)?
         
@@ -27,6 +28,11 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
         private func  preventFurtherCompletion() {
             completion = nil
         }
+    
+    }
+    
+    public func save(_ data: Data, for url: URL,completion: @escaping (SaveResult) -> Void) {
+        store.insert(data, for: url) { _ in }
     }
     
     public enum Error: Swift.Error {
