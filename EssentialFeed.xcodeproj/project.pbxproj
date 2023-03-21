@@ -35,6 +35,7 @@
 		9548DEEC296CA7E400BCE861 /* XCTestCase+FeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9548DEEB296CA7E400BCE861 /* XCTestCase+FeedStoreSpecs.swift */; };
 		9549232929C9FCDA00916A87 /* FeedImageDataStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9549232829C9FCDA00916A87 /* FeedImageDataStoreSpy.swift */; };
 		9549232B29C9FFB400916A87 /* CacheFeedImageDataUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9549232A29C9FFB400916A87 /* CacheFeedImageDataUseCaseTests.swift */; };
+		9549232D29CA27B500916A87 /* CoreDataFeedImageDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9549232C29CA27B500916A87 /* CoreDataFeedImageDataStoreTests.swift */; };
 		95501C69294D037000267920 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95501C60294D037000267920 /* EssentialFeed.framework */; };
 		95501C79294D038900267920 /* FeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95501C78294D038900267920 /* FeedImage.swift */; };
 		95501C7C294D03AE00267920 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95501C7B294D03AE00267920 /* FeedLoader.swift */; };
@@ -179,6 +180,7 @@
 		9548DEEB296CA7E400BCE861 /* XCTestCase+FeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FeedStoreSpecs.swift"; sourceTree = "<group>"; };
 		9549232829C9FCDA00916A87 /* FeedImageDataStoreSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataStoreSpy.swift; sourceTree = "<group>"; };
 		9549232A29C9FFB400916A87 /* CacheFeedImageDataUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedImageDataUseCaseTests.swift; sourceTree = "<group>"; };
+		9549232C29CA27B500916A87 /* CoreDataFeedImageDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedImageDataStoreTests.swift; sourceTree = "<group>"; };
 		95501C60294D037000267920 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95501C68294D037000267920 /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95501C78294D038900267920 /* FeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImage.swift; sourceTree = "<group>"; };
@@ -381,13 +383,6 @@
 			path = "Feed UI";
 			sourceTree = "<group>";
 		};
-		952C3A9E2992C07D00EC864B /* Feed Image Loader */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Feed Image Loader";
-			sourceTree = "<group>";
-		};
 		952C8002297090C700BA5E6F /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,7 +398,6 @@
 		952DEE4E29827EB600924576 /* EssentialFeediOS */ = {
 			isa = PBXGroup;
 			children = (
-				952C3A9E2992C07D00EC864B /* Feed Image Loader */,
 				952C3A9D2992C00A00EC864B /* Feed UI */,
 			);
 			path = EssentialFeediOS;
@@ -600,6 +594,7 @@
 				95C08F33296F27FE004129F1 /* CoreDataFeedStoreTests.swift */,
 				95FD3F0C29C8797400FE2547 /* LocalFeedImageDataFromCacheUseCaseTests.swift */,
 				9549232A29C9FFB400916A87 /* CacheFeedImageDataUseCaseTests.swift */,
+				9549232C29CA27B500916A87 /* CoreDataFeedImageDataStoreTests.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -960,6 +955,7 @@
 				95C3695D296DA83500DE34E3 /* XCTestCase+FailableDeleteFeedStoreSpecs.swift in Sources */,
 				95EC2D87295E94DA007992E3 /* LoadFeedFromCacheUseCaseTests.swift in Sources */,
 				9549232929C9FCDA00916A87 /* FeedImageDataStoreSpy.swift in Sources */,
+				9549232D29CA27B500916A87 /* CoreDataFeedImageDataStoreTests.swift in Sources */,
 				9562F939294F8F1C00EB3964 /* XCTestCase+TrackMemoryLeak.swift in Sources */,
 				9548DEEA296CA6AD00BCE861 /* FeedStoreSpecs.swift in Sources */,
 				956D99002960690E00076FDF /* SharedTestsHelper.swift in Sources */,
