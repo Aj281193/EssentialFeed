@@ -7,10 +7,9 @@
 
 import Foundation
 
-public final class LocalFeedImageDataLoader: FeedImageDataLoader {
+public final class LocalFeedImageDataLoader {
         
-        public typealias SaveResult = Result<Void,Swift.Error>
-        private final class Task: FeedImageDataLoaderTask {
+        private final class loadImageDataTask: FeedImageDataLoaderTask {
         private var completion: ((FeedImageDataLoader.Result) -> Void)?
         
         public init(_ completion: @escaping (FeedImageDataLoader.Result) -> Void) {
@@ -31,27 +30,37 @@ public final class LocalFeedImageDataLoader: FeedImageDataLoader {
     
     }
     
-    public func save(_ data: Data, for url: URL,completion: @escaping (SaveResult) -> Void) {
-        store.insert(data, for: url) { _ in }
-    }
-    
-    public enum Error: Swift.Error {
-     case failed
-     case notFound
-    }
-    
     let store: FeedImageDataStore
     
     public init(store: FeedImageDataStore) {
         self.store = store
     }
     
-    public func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        let task = Task(completion)
-        store.retrieve(dataFromURL: url) { [weak self] result in
+}
+
+extension LocalFeedImageDataLoader {
+    public typealias SaveResult = Result<Void,Swift.Error>
+    
+    public func save(_ data: Data, for url: URL,completion: @escaping (SaveResult) -> Void) {
+        store.insert(data, for: url) { _ in }
+    }
+}
+
+extension LocalFeedImageDataLoader: FeedImageDataLoader {
+    
+    public typealias loadResult = FeedImageDataLoader.Result
+    
+    public enum LoadError: Swift.Error {
+     case failed
+     case notFound
+    }
+    
+    public func loadImageData(from url: URL, completion: @escaping (loadResult) -> Void) -> FeedImageDataLoaderTask {
+        let task = loadImageDataTask(completion)
+        store.completeRetrieval(dataFromURL: url) { [weak self] result in
             guard self != nil else { return }
             task.complete(with: result
-                .mapError{_ in Error.failed}.flatMap{ data in data.map { .success($0)} ?? .failure(Error.notFound)}
+                .mapError{_ in LoadError.failed}.flatMap{ data in data.map { .success($0)} ?? .failure(LoadError.notFound)}
                 )
         }
         return task
