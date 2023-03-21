@@ -37,6 +37,23 @@ final class CacheFeedImageDataUseCaseTests: XCTestCase {
         
     }
     
+    func test_saveImageDataFromURL_succedsOnSuccessfulStoreInsertion() {
+        let (sut,store) = makeSUT()
+        
+        expect(sut, toCompletedWith: .success(())) {
+            store.completeInsertionSuccessFully()
+        }
+    }
+    
+    // MARK Helpers:-
+    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line)  -> (sut: LocalFeedImageDataLoader, store: FeedImageDataStoreSpy){
+        let store = FeedImageDataStoreSpy()
+        let sut = LocalFeedImageDataLoader(store: store)
+        trackForMemoryLeak(sut,file: file,line: line)
+        trackForMemoryLeak(store, file: file,line: line)
+        return (sut,store)
+    }
+    
     private func expect(_ sut: LocalFeedImageDataLoader, toCompletedWith expectedResult: LocalFeedImageDataLoader.SaveResult, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         
         let exp = expectation(description: "wait for load completion")
@@ -60,12 +77,4 @@ final class CacheFeedImageDataUseCaseTests: XCTestCase {
         return .failure(LocalFeedImageDataLoader.SaveError.failed)
     }
     
-    // MARK Helpers:-
-    private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line)  -> (sut: LocalFeedImageDataLoader, store: FeedImageDataStoreSpy){
-        let store = FeedImageDataStoreSpy()
-        let sut = LocalFeedImageDataLoader(store: store)
-        trackForMemoryLeak(sut,file: file,line: line)
-        trackForMemoryLeak(store, file: file,line: line)
-        return (sut,store)
-    }
 }
