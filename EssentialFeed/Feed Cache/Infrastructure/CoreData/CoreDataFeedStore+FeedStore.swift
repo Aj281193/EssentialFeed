@@ -1,28 +1,19 @@
 //
-//  CoreDataFeedStore.swift
+//  CoreDataFeedStore+FeedStore.swift
 //  EssentialFeed
 //
-//  Created by Ashish Jaiswal on 11/01/23.
+//  Created by Ashish Jaiswal on 25/03/23.
 //
 
-import CoreData
+import Foundation
 
-public final class CoreDataFeedStore: FeedStore {
-    
-    private let container: NSPersistentContainer
-    
-    private let context: NSManagedObjectContext
-    
-    public init(storeURL: URL, bundle: Bundle = .main) throws {
-        container = try NSPersistentContainer.load(modelName: "FeedStore", url: storeURL, in: bundle)
-        context = container.newBackgroundContext()
-    }
+extension CoreDataFeedStore: FeedStore {
     
     public func retrieve(completion: @escaping RetrievalCompletion)  {
         perform { context in
             completion(Result {
                 try ManagedCache.find(in: context).map {
-                    return CacheFeed(feed: $0.localFeed, timeStamp: $0.timeStamp)
+                   CacheFeed(feed: $0.localFeed, timeStamp: $0.timeStamp)
                 }
             })
         }
@@ -47,9 +38,4 @@ public final class CoreDataFeedStore: FeedStore {
         }
     }
     
-    private func perform(_ action: @escaping (NSManagedObjectContext) -> Void) {
-        let context = self.context
-        context.perform { action(context) }
-    }
 }
-
