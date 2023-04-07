@@ -30,26 +30,40 @@ class FeedImageDataLoaderWithFallbackComposite: FeedImageDataLoader {
 final class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
 
     func test_init_doesNotLoadImageData() {
-        let primaryLoader = LoaderSpy()
-        let fallBackLoader = LoaderSpy()
+    
+        let (_, primaryLoader,fallBackLoader) = makeSUT()
         
-        _ = FeedImageDataLoaderWithFallbackComposite(primary: primaryLoader, fallBack: fallBackLoader)
         XCTAssertTrue(primaryLoader.loadedURLs.isEmpty, "Expected no loaded URL's in the primary loader")
         XCTAssertTrue(fallBackLoader.loadedURLs.isEmpty, "Expected no loaded URL's in the fallback loader")
     }
     
     func test_loadImageData_loadFromPrimaryLoaderFirst() {
         let url = anyURL()
-        let primaryLoader = LoaderSpy()
-        let fallbackLoader = LoaderSpy()
-        
-        let sut = FeedImageDataLoaderWithFallbackComposite(primary: primaryLoader, fallBack: fallbackLoader)
+        let (sut,primaryLoader,fallbackLoader) = makeSUT()
         _ = sut.loadImageData(from: url) { _ in }
         
         XCTAssertEqual(primaryLoader.loadedURLs, [url],"Expected to load URL from primary Loader")
         XCTAssertTrue(fallbackLoader.loadedURLs.isEmpty,"Expected no loaded urls in the fallback loader")
         
     }
+    
+    //MARK Helpers
+    
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedImageDataLoader,primary: LoaderSpy, fallback: LoaderSpy) {
+        let primaryLoader = LoaderSpy()
+        let fallbackLoader = LoaderSpy()
+        let sut = FeedImageDataLoaderWithFallbackComposite(primary: primaryLoader, fallBack: fallbackLoader)
+        trackForMemoryLeaks(primaryLoader,file: file ,line: line)
+        trackForMemoryLeaks(fallbackLoader,file: file, line: line)
+        trackForMemoryLeaks(sut,file: file,line: line)
+        return (sut,primaryLoader,fallbackLoader)
+    }
+    
+    private func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #file, line: UInt = #line) {
+            addTeardownBlock { [weak instance] in
+                XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak.", file: file, line: line)
+            }
+        }
     
     private class LoaderSpy: FeedImageDataLoader {
         private var messages = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
