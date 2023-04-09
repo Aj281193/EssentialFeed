@@ -89,7 +89,7 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase, FeedImageDataLoa
         return (sut,loader)
     }
     
-    private class CacheSpy: FeedImageCache {
+    private class CacheSpy: FeedImageDataCache {
         private(set) var messages = [Message]()
         
         enum Message: Equatable {

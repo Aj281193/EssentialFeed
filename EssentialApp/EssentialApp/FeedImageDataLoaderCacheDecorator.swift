@@ -11,7 +11,7 @@ import EssentialFeed
 public class FeedImageDataLoaderCacheDecorator: FeedImageDataLoader {
     
     let decoratee: FeedImageDataLoader
-    let imageCache: FeedImageCache
+    let imageCache: FeedImageDataCache
     
     private class TaskWrapper: FeedImageDataLoaderTask {
         var wrapped: FeedImageDataLoaderTask?
@@ -21,7 +21,7 @@ public class FeedImageDataLoaderCacheDecorator: FeedImageDataLoader {
         }
     }
     
-    public init(decoratee: FeedImageDataLoader, cache: FeedImageCache) {
+    public init(decoratee: FeedImageDataLoader, cache: FeedImageDataCache) {
         self.decoratee = decoratee
         self.imageCache = cache
     }
