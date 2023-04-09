@@ -7,36 +7,7 @@
 
 import XCTest
 import EssentialFeed
-
-class FeedImageLoaderCacheDecorator: FeedImageDataLoader {
-    
-    let decoratee: FeedImageDataLoader
-    let imageCache: FeedImageCache
-    
-    private class TaskWrapper: FeedImageDataLoaderTask {
-        var wrapped: FeedImageDataLoaderTask?
-        
-        func cancel() {
-            wrapped?.cancel()
-        }
-    }
-    
-    init(decoratee: FeedImageDataLoader, cache: FeedImageCache) {
-        self.decoratee = decoratee
-        self.imageCache = cache
-    }
-    
-    func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        let task = TaskWrapper()
-        task.wrapped = decoratee.loadImageData(from: url) { [weak self] result in
-            completion(result.map { imageData in
-                self?.imageCache.save(imageData, for: url) { _ in }
-                return imageData
-            })
-        }
-        return task
-    }
-}
+import EssentialApp
 
 final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase, FeedImageDataLoadderTestCase {
 
@@ -112,7 +83,7 @@ final class FeedImageDataLoaderCacheDecoratorTests: XCTestCase, FeedImageDataLoa
     
     private func makeSUT(cache: CacheSpy = .init(), file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedImageDataLoader,loader: FeedImageDataLoaderSpy) {
         let loader = FeedImageDataLoaderSpy()
-        let sut = FeedImageLoaderCacheDecorator(decoratee: loader, cache: cache)
+        let sut = FeedImageDataLoaderCacheDecorator(decoratee: loader, cache: cache)
         trackForMemoryLeaks(sut,file: file,line: line)
         trackForMemoryLeaks(loader,file: file,line: line)
         return (sut,loader)
