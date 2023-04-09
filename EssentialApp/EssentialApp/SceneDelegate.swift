@@ -33,7 +33,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let localFeedLoader = LocalFeedLoader(store: localStore, currentDate: Date.init)
         let localImageLoader = LocalFeedImageDataLoader(store: localStore)
         
-        window?.rootViewController = FeedUIComposer.feedComposedWith(feedloader: FeedLoaderWithFallbackComposite(primary: remoteFeedLoader, fallback: FeedLoaderWithFallbackComposite(primary: remoteFeedLoader, fallback: localFeedLoader)), imageLoader: FeedImageDataLoaderWithFallbackComposite(primary: localImageLoader, fallback: remoteImageLoader))
+        window?.rootViewController = FeedUIComposer.feedComposedWith(
+            feedloader: FeedLoaderWithFallbackComposite(
+                primary: remoteFeedLoader,
+                fallback: FeedLoaderWithFallbackComposite(
+                    primary: FeedLoaderCacheDecorator(
+                        decoratee: remoteFeedLoader,
+                        cache: localFeedLoader),
+                    fallback: localFeedLoader)),
+            imageLoader: FeedImageDataLoaderWithFallbackComposite(
+                primary: localImageLoader,
+                fallback: FeedImageDataLoaderCacheDecorator(
+                    decoratee: remoteImageLoader,
+                    cache: localImageLoader)))
         
     }
 
