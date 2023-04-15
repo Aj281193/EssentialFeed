@@ -21,18 +21,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
-//        let url = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
-//        let session = URLSession(configuration: .ephemeral)
-//        let remoteClient = URLSessionHttpClient(session: session)
-//        let remoteFeedLoader = RemoteFeedLoader(url: url, client: remoteClient)
-//        let remoteImageLoader = RemoteFeedImageDataLoader(client: remoteClient)
-//      
+        let url = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
+        let session = URLSession(configuration: .ephemeral)
+        let remoteClient = URLSessionHttpClient(session: session)
+        let remoteFeedLoader = RemoteFeedLoader(url: url, client: remoteClient)
+        let remoteImageLoader = RemoteFeedImageDataLoader(client: remoteClient)
+
+        window?.rootViewController = FeedUIComposer.feedComposedWith(
+            feedloader: remoteFeedLoader,
+            imageLoader: remoteImageLoader)
 //        let localStorageURLs = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("feed-store.sqlite")
-//    
+//
 //        let localStore = try! CoreDataFeedStore(storeURL: localStorageURLs)
 //        let localFeedLoader = LocalFeedLoader(store: localStore, currentDate: Date.init)
 //        let localImageLoader = LocalFeedImageDataLoader(store: localStore)
-//        
+//
 //        window?.rootViewController = FeedUIComposer.feedComposedWith(
 //            feedloader:
 //                FeedLoaderWithFallbackComposite(
