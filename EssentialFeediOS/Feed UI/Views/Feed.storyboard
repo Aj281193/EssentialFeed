@@ -89,6 +89,7 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HTR-I2-jLJ">
                                                             <rect key="frame" x="0.0" y="0.0" width="353" height="353"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="feed-image-view"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
@@ -144,6 +145,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="PL3-9b-JKJ" secondAttribute="trailing" id="ysy-of-jxZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <accessibility key="accessibilityConfiguration" identifier="feed-image-cell"/>
                                 <connections>
                                     <outlet property="descriptionLabel" destination="Mw0-vN-VmV" id="NBh-sC-nm1"/>
                                     <outlet property="feedImageContainer" destination="0cj-WW-GcB" id="nGr-eN-3Yr"/>
