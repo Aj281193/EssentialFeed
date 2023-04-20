@@ -20,7 +20,7 @@ final class FeedImageDataStoreSpy: FeedImageDataStore {
     private(set) var receivedMessages = [Message]()
     
     
-    func completeRetrieval(dataFromURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
+    func retrieve(dataFromURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
         receivedMessages.append(.retrieve(dataFor: url))
         retrievalCompletions.append(completion)
     }

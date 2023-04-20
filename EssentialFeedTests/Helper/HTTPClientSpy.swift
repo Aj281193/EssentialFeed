@@ -27,10 +27,6 @@ import EssentialFeed
         }
     }
     
-    func post(_ data: Data, to url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-        
-    }
-    
     func complete(with error: Error, at index: Int = 0) {
         messages[index].completion(.failure(error))
     }

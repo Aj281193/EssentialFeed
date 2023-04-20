@@ -20,7 +20,8 @@ public protocol HTTPClient {
     @discardableResult
     func get(from url: URL, completion: @escaping (Result) -> Void) -> HTTPClientTask
     
-    /// The completion Handler can be invoked in any thread.
-    /// Client  are responsible to dispatch to appropriate thread if needed.
-    func post(_ data: Data,to url: URL, completion: @escaping (Result) -> Void)
+}
+
+extension HTTPClient {
+    func post(_ data: Data,to url: URL, completion: @escaping (HTTPClient.Result) -> Void) { }
 }

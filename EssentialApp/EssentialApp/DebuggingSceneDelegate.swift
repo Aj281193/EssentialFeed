@@ -83,7 +83,5 @@ private class DebuggingHTTPClient: HTTPClient {
                 ["id":UUID().uuidString,"image": "http://image.com"]
      ]])
     }
-    
-    func post(_ data: Data, to url: URL, completion: @escaping (HTTPClient.Result) -> Void) {}
 }
 #endif
