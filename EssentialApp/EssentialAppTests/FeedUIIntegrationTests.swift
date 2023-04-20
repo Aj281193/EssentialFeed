@@ -8,6 +8,7 @@
 import XCTest
 import EssentialFeed
 import EssentialFeediOS
+import EssentialApp
 
 final class FeedUIIntegrationTests: XCTestCase {
 
@@ -341,35 +342,13 @@ final class FeedUIIntegrationTests: XCTestCase {
     //Mark:- Helpers
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
+        
         let sut = FeedUIComposer.feedComposedWith(feedloader: loader, imageLoader: loader)
-        trackForMemoryLeak(sut,file: file,line: line)
-        trackForMemoryLeak(loader,file: file,line: line)
+        trackForMemoryLeaks(sut,file: file,line: line)
+        trackForMemoryLeaks(loader,file: file,line: line)
         return (sut,loader)
     }
     
-    private func assertThat(_ sut: FeedViewController, isRendring feed: [FeedImage], file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertEqual(sut.numbderOfRenderFeedImageView(), feed.count)
-        
-        feed.enumerated().forEach { index, image in
-            assertThat(sut, hasConfiguredFor: image, at: index)
-        }
-    }
-    
-    private func assertThat(_ sut: FeedViewController, hasConfiguredFor image: FeedImage, at index: Int, file: StaticString = #filePath, line: UInt = #line) {
-        
-        let view = sut.feedImageView(at: index)
-        
-        guard let cell = view as? FeedImageCell else {
-            return XCTFail("Expected \(FeedImageCell.self) instance, got \(String(describing: view)) instead", file: file,line: line)
-        }
-    
-        let shouldLocationVisible = (image.location != nil)
-        XCTAssertEqual(cell.isShowingLocation, shouldLocationVisible, "Expected \(shouldLocationVisible) for image view at \(index)",file: file,line: line)
-        
-        XCTAssertEqual(cell.locationText, image.location, "Expected location text to be \(String(describing: image.location)) for image view at index \(index)",file: file,line: line)
-        
-        XCTAssertEqual(cell.descriptionText, image.description, "Expected description text to be \(String(describing: image.description)) for image view at \(index)",file: file,line: line)
-    }
     
     private func makeImage(description: String? = nil, location: String? = nil, url: URL = URL(string: "http://any-url.com")!) -> FeedImage {
        return FeedImage(id: UUID(), description: description, location: location, url: url)
@@ -377,68 +356,6 @@ final class FeedUIIntegrationTests: XCTestCase {
     
     private func anyImageData() -> Data {
         return UIImage.make(withColor: .red).pngData()!
-    }
-    
-    class LoaderSpy: FeedLoader, FeedImageDataLoader {
-      
-        //MARK: FeedLoader
-        private var feedRequests = [(FeedLoader.Result) -> Void]()
-       
-        var loadFeedCallCount: Int {
-            return feedRequests.count
-        }
-        
-        func load(completion: @escaping (FeedLoader.Result) -> Void) {
-            feedRequests.append(completion)
-        }
-        
-        func completeFeedLoading(with feed: [FeedImage] = [], at index: Int = 0) {
-            feedRequests[index](.success(feed))
-        }
-        
-        func completeFeedLoadingWithError(at index: Int) {
-            let error = NSError(domain: "an error", code: 0)
-            feedRequests[index](.failure(error))
-        }
-        
-        //MARK: ImageDataLoader
-        
-        var loadedImageURLs: [URL] {
-            return imageRequest.map { $0.url }
-        }
-        
-        private struct TaskSpy: FeedImageDataLoaderTask {
-            let cancelCallback: () -> Void
-            
-            func cancel() {
-                cancelCallback()
-            }
-        }
-        
-        private var imageRequest = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
-        
-        private(set) var cancelledImageURLs = [URL]()
-        
-      
-        func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-            imageRequest.append((url,completion))
-            return TaskSpy { [weak self] in  self?.cancelledImageURLs.append(url)  }
-        }
-        
-        func completeImageLoading(with imageData: Data = Data(), at index: Int) {
-            imageRequest[index].completion(.success(imageData))
-        }
-        
-        func completeImageLoadingWithError( at index: Int) {
-            let error = NSError(domain: "any Error", code: 0)
-            imageRequest[index].completion(.failure(error))
-        }
-        
-        
-        func completedImageLoadingWithError(at index: Int) {
-            let error = NSError(domain: "any error", code: 0)
-            imageRequest[index].completion(.failure(error))
-        }
     }
 }
 
