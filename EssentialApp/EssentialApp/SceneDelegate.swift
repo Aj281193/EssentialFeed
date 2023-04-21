@@ -14,6 +14,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
+    private lazy var localFeedLoader: LocalFeedLoader = {
+        LocalFeedLoader(store: store, currentDate: Date.init)
+    }()
+    
     private lazy var httpClient: HTTPClient = {
         URLSessionHttpClient(session: URLSession(configuration: .ephemeral))
     }()
@@ -40,8 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: httpClient)
         let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
-
-        let localFeedLoader = LocalFeedLoader(store: store, currentDate: Date.init)
+        
         let localImageLoader = LocalFeedImageDataLoader(store: store)
         
         window?.rootViewController = UINavigationController( rootViewController: FeedUIComposer.feedComposedWith(
@@ -71,8 +74,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
+        localFeedLoader.validateCache { _ in }
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
