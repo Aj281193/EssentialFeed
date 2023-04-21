@@ -21,7 +21,3 @@ public protocol HTTPClient {
     func get(from url: URL, completion: @escaping (Result) -> Void) -> HTTPClientTask
     
 }
-
-extension HTTPClient {
-    func post(_ data: Data,to url: URL, completion: @escaping (HTTPClient.Result) -> Void) { }
-}

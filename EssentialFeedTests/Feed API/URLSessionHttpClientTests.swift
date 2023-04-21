@@ -28,24 +28,7 @@ class URLSessionHttpClientTests: XCTestCase {
         makeSUT().get(from: url) { _ in }
         wait(for: [exp], timeout: 1.0)
     }
-    
-    func test_performPostRequestWith_DataAndURL() {
-        let url = anyURL()
-        let data = anyData()
-        let exp = expectation(description: "Wait for request")
         
-        URLProtocolStub.observeRequests { request in
-            XCTAssertEqual(request.url, url)
-            XCTAssertEqual(request.httpMethod, "POST")
-            XCTAssertEqual(request.httpBodyData, data)
-            exp.fulfill()
-        }
-        
-        makeSUT().post(data, to: url) { _ in }
-        wait(for: [exp], timeout: 1.0)
-    }
-    
-    
     func test_getFromURL_failsOnRequestError() {
         
         let requestError = anyError()

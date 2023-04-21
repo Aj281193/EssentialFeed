@@ -43,24 +43,6 @@ public final class URLSessionHttpClient: HTTPClient {
         task.resume()
         return URLSessionTaskWrapper(wrapped: task)
     }
-    
-    public func post(_ data: Data,to url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = data
-        
-        session.dataTask(with: request) { data, response, error in
-            completion(Result {
-                if let error = error {
-                    throw error
-                } else if let data = data, let response = response as? HTTPURLResponse {
-                    return (data, response)
-                } else {
-                    throw UnexpectedValuesRepresentaion()
-                }
-            })
-        }.resume()
-    }
 }
 
 
