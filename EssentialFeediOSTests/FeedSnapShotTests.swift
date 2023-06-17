@@ -35,7 +35,13 @@ final class FeedSnapShotTests: XCTestCase {
         record(snapshot: sut.snapshot(), name: "FEED_WITH_ERROR_MESSAGE")
     }
     
-    
+    func test_feedWithFailedImageLoading() {
+        let sut = makeSUT()
+        
+        sut.display(feedWithFailedImageLoading())
+        
+        record(snapshot: sut.snapshot(), name: "FEED_WITH_FAILED_IMAGE_LOADING")
+    }
     
     // MARK Helpers
     
@@ -68,6 +74,20 @@ final class FeedSnapShotTests: XCTestCase {
         } catch {
            XCTFail("Failed to record snapshot with error: \(error)",file: file,line: line)
         }
+    }
+    
+    private func feedWithFailedImageLoading() -> [ImageStub] {
+        return [
+            ImageStub(
+                description: nil,
+                location: "Common Street London",
+                image: nil),
+            
+            ImageStub(
+                description: nil,
+                location: "Brighton Seafront",
+                image: nil)
+        ]
     }
     
     private func feedWithContent() -> [ImageStub] {
