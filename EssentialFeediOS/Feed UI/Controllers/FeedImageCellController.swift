@@ -13,7 +13,7 @@ protocol FeedImageCellControllerDelegate {
     func didCancelImageRequest()
 }
 
-final class FeedImageCellController: FeedImageView {
+public final class FeedImageCellController: FeedImageView {
     
     private let delegate: FeedImageCellControllerDelegate
     private var cell: FeedImageCell?
@@ -28,7 +28,7 @@ final class FeedImageCellController: FeedImageView {
         return cell!
     }
     
-    func display(_ viewModel: FeedImageViewModel<UIImage>) {
+    public func display(_ viewModel: FeedImageViewModel<UIImage>) {
         cell?.locationContainer.isHidden = viewModel.hasLoaction
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description
