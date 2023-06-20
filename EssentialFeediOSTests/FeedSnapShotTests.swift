@@ -16,8 +16,8 @@ final class FeedSnapShotTests: XCTestCase {
         
         sut.display(emptyFeed())
         
-        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), name: "EMPTY_FEED_LIGHT")
-        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), name: "EMPTY_FEED_DARK")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), name: "EMPTY_FEED_LIGHT")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), name: "EMPTY_FEED_DARK")
 
     }
     
@@ -26,8 +26,8 @@ final class FeedSnapShotTests: XCTestCase {
         
         sut.display(feedWithContent())
         
-        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), name: "FEED_WITH_CONTENT_LIGHT")
-        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), name: "FEED_WITH_CONTENT_DARK")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), name: "FEED_WITH_CONTENT_LIGHT")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), name: "FEED_WITH_CONTENT_DARK")
 
     }
     
@@ -36,8 +36,8 @@ final class FeedSnapShotTests: XCTestCase {
         
         sut.display(.error(message: "This is \nmultiline\n error"))
         
-        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), name: "FEED_WITH_ERROR_MESSAGE_LIGHT")
-        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), name: "FEED_WITH_ERROR_MESSAGE_DARK")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), name: "FEED_WITH_ERROR_MESSAGE_LIGHT")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), name: "FEED_WITH_ERROR_MESSAGE_DARK")
 
         
     }
@@ -46,8 +46,8 @@ final class FeedSnapShotTests: XCTestCase {
         let sut = makeSUT()
         sut.display(feedWithFailedImageLoading())
         
-        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), name: "FEED_WITH_FAILED_IMAGE_LOADING_LIGHT")
-        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), name: "FEED_WITH_FAILED_IMAGE_LOADING_DARK")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), name: "FEED_WITH_FAILED_IMAGE_LOADING_LIGHT")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), name: "FEED_WITH_FAILED_IMAGE_LOADING_DARK")
 
     }
     
