@@ -17,10 +17,12 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
     @IBOutlet var refreshController: UIRefreshControl?
     
     var delegate: FeedViewControllerDelegate?
-  
+    
+    private var loadingControllers = [IndexPath: FeedImageCellController]()
+    
     @IBOutlet private(set) public var errorView: ErrorView?
     
-    var tableModel = [FeedImageCellController]() {
+    private var tableModel = [FeedImageCellController]() {
         didSet {
             tableView.reloadData()
         }
@@ -40,6 +42,11 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
         errorView?.message = viewModel.message
     }
     
+    public func display(_ cellController: [FeedImageCellController]) {
+        loadingControllers = [:]
+        tableModel = cellController
+    }
+    
     @IBAction func refresh() {
         delegate?.didRequestFeedRefresh()
     }
@@ -53,6 +60,7 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
     }
     
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard tableModel.count > indexPath.row else { return }
         cancelCellControllerLoad(forRowAt: indexPath)
     }
     
@@ -63,7 +71,9 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
     }
     
     private func cellController(forRowAt indexPath: IndexPath) -> FeedImageCellController {
-        return tableModel[indexPath.row]
+        let controller = tableModel[indexPath.row]
+        loadingControllers[indexPath] = controller
+        return controller
     }
     
     public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
@@ -71,7 +81,8 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
     }
     
     private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
-        cellController(forRowAt: indexPath).cancelLoad()
+        loadingControllers[indexPath]?.cancelLoad()
+        loadingControllers[indexPath] = nil
     }
 }
 
