@@ -9,8 +9,8 @@ on:
 jobs:
   build-and-test:
   
-    runs-on: ${{ fromJSON('["ubuntu-latest", "self-hosted"]')[github.repository == 'github/docs-internal'] }}
-    
+    runs-on: macos-latest
+  
     steps:
     - uses: actions/checkout@v2
     
