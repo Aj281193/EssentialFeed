@@ -73,6 +73,22 @@ final class FeedUIIntegrationTests: XCTestCase {
         assertThat(sut, isRendring: [image0,image1,image2,image3])
     }
     
+    func test_loadFeedCompletion_renderSuccessFullyLoadedEmptyFeedAfterNonEmptyFeed() {
+        let image0 = makeImage()
+        let image1 = makeImage()
+        
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        
+        loader.completeFeedLoading(with: [image0,image1],at: 0)
+        assertThat(sut, isRendring: [image0,image1])
+        
+        sut.simulateUserInitiatedFeedReload()
+        loader.completeFeedLoading(with: [],at: 1)
+        assertThat(sut, isRendring: [])
+        
+    }
+    
     func test_loadFeedCompletion_doesNotAlterRenderStateOnError() {
         let image0 = makeImage()
         
@@ -346,31 +362,7 @@ final class FeedUIIntegrationTests: XCTestCase {
         trackForMemoryLeak(loader,file: file,line: line)
         return (sut,loader)
     }
-    
-    private func assertThat(_ sut: FeedViewController, isRendring feed: [FeedImage], file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertEqual(sut.numbderOfRenderFeedImageView(), feed.count)
         
-        feed.enumerated().forEach { index, image in
-            assertThat(sut, hasConfiguredFor: image, at: index)
-        }
-    }
-    
-    private func assertThat(_ sut: FeedViewController, hasConfiguredFor image: FeedImage, at index: Int, file: StaticString = #filePath, line: UInt = #line) {
-        
-        let view = sut.feedImageView(at: index)
-        
-        guard let cell = view as? FeedImageCell else {
-            return XCTFail("Expected \(FeedImageCell.self) instance, got \(String(describing: view)) instead", file: file,line: line)
-        }
-    
-        let shouldLocationVisible = (image.location != nil)
-        XCTAssertEqual(cell.isShowingLocation, shouldLocationVisible, "Expected \(shouldLocationVisible) for image view at \(index)",file: file,line: line)
-        
-        XCTAssertEqual(cell.locationText, image.location, "Expected location text to be \(String(describing: image.location)) for image view at index \(index)",file: file,line: line)
-        
-        XCTAssertEqual(cell.descriptionText, image.description, "Expected description text to be \(String(describing: image.description)) for image view at \(index)",file: file,line: line)
-    }
-    
     private func makeImage(description: String? = nil, location: String? = nil, url: URL = URL(string: "http://any-url.com")!) -> FeedImage {
        return FeedImage(id: UUID(), description: description, location: location, url: url)
     }
