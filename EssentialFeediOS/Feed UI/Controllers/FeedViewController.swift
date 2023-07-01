@@ -8,7 +8,7 @@
 import UIKit
 import EssentialFeed
 
-protocol FeedViewControllerDelegate {
+public protocol FeedViewControllerDelegate {
     func didRequestFeedRefresh()
 }
 
@@ -16,7 +16,7 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
   
     @IBOutlet var refreshController: UIRefreshControl?
     
-    var delegate: FeedViewControllerDelegate?
+    public var delegate: FeedViewControllerDelegate?
     
     private var loadingControllers = [IndexPath: FeedImageCellController]()
     
