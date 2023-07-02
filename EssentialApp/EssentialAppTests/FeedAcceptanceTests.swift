@@ -54,6 +54,27 @@ final class FeedAcceptanceTests: XCTestCase {
         return nav?.topViewController as! FeedViewController
     }
     
+    func test_onEnteringBackground_deleteExpiredFeedCache() {
+        let store = InMemoryFeedStore.withExpiredFeedCache
+        
+        enterBackground(with: store)
+        
+        XCTAssertNil(store.feedCache,"Expected to delete expired cache")
+    }
+    
+    func test_onEnteringBackground_keepNonExpiredFeedCache() {
+        let store = InMemoryFeedStore.withNonExpiredFeedCache
+        
+        enterBackground(with: store)
+        
+        XCTAssertNotNil(store.feedCache,"Expected to keep non-expired cache")
+    }
+    
+    private func  enterBackground(with store: InMemoryFeedStore) {
+        let sut = SceneDelegate(httpClient: HTTPClientStub.offline, store: store)
+        sut.sceneWillResignActive(UIApplication.shared.connectedScenes.first!)
+    }
+    
     private class HTTPClientStub: HTTPClient {
         
         private class Task: HTTPClientTask {
@@ -85,8 +106,12 @@ final class FeedAcceptanceTests: XCTestCase {
     
     private class InMemoryFeedStore: FeedStore, FeedImageDataStore {
         
-        private var feedCache: CacheFeed?
+        var feedCache: CacheFeed?
         private var feedImageDataCache: [URL: Data] = [:]
+        
+        init(feedCache: CacheFeed? = nil) {
+            self.feedCache = feedCache
+        }
         
         func insert(_ data: Data, for url: URL, completion: @escaping (FeedImageDataStore.InsertionResult) -> Void) {
             feedImageDataCache[url] = data
@@ -115,6 +140,13 @@ final class FeedAcceptanceTests: XCTestCase {
             InMemoryFeedStore()
         }
         
+        static var withExpiredFeedCache: InMemoryFeedStore {
+            InMemoryFeedStore(feedCache: CacheFeed(feed: [], timeStamp: Date.distantPast))
+        }
+        
+        static var withNonExpiredFeedCache: InMemoryFeedStore {
+            InMemoryFeedStore(feedCache: CacheFeed(feed: [], timeStamp: Date()))
+        }
     }
     
     private func response(for url: URL) -> (Data,HTTPURLResponse) {
