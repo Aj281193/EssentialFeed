@@ -21,7 +21,7 @@ final class SceneDelegateTests: XCTestCase {
         XCTAssertEqual(window.makeKeyAndVisibleCallCount, 1)
     }
     
-    func test_SceneWillConnectToSession_ConfigureRootViewController() {
+    func test_configureWindow_ConfigureRootViewController() {
         let sut = SceneDelegate()
         sut.window = UIWindow()
         
