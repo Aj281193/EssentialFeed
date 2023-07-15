@@ -7,13 +7,17 @@
 
 import Foundation
 
-public class RemoteLoader: FeedLoader {
+public class RemoteLoader<Resource>{
     private let url: URL
     private let client: HTTPClient
+    private let mapper: Mapper
     
-    public init(url: URL, client: HTTPClient) {
+    public typealias Mapper = (Data, HTTPURLResponse) throws -> Resource
+    
+    public init(url: URL, client: HTTPClient, mapper: @escaping Mapper) {
         self.url = url
         self.client = client
+        self.mapper = mapper
     }
     
     public enum Error: Swift.Error {
@@ -22,23 +26,23 @@ public class RemoteLoader: FeedLoader {
     }
     
    
-    public typealias Result = FeedLoader.Result
+    public typealias Result = Swift.Result<Resource,Swift.Error>
     
     public func load(completion: @escaping (Result) -> Void) {
         client.get(from: url) {[weak self] result in
-            guard self != nil else { return }
+            guard let self = self else { return }
             switch result {
             case let .success((data, response)):
-                completion(RemoteLoader.map(data, from: response))
+                completion(self.map(data, from: response))
             case .failure:
                 completion(.failure(Error.connectivity))
             }
         }
     }
-    private static func map(_ data: Data,from response: HTTPURLResponse) -> Result {
+    
+    private func map(_ data: Data,from response: HTTPURLResponse) -> Result {
         do {
-            let items = try FeedItemMapper.map(data, response)
-           return .success(items)
+           return .success(try mapper(data, response))
         } catch  {
             return .failure(Error.invalidData)
         }
