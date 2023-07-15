@@ -321,6 +321,23 @@
 			path = "FeedImage Presenter";
 			sourceTree = "<group>";
 		};
+		9512DF592A6277AC000DD1FB /* Image Comment API */ = {
+			isa = PBXGroup;
+			children = (
+				95A6AA8E2A60726300906BDA /* RemoteImageCommentsLoader.swift */,
+				95A6AA902A60739D00906BDA /* ImageCommentsMapper.swift */,
+			);
+			path = "Image Comment API";
+			sourceTree = "<group>";
+		};
+		9512DF5A2A6277FC000DD1FB /* Image Comment API */ = {
+			isa = PBXGroup;
+			children = (
+				95A6AA8C2A6070FA00906BDA /* LoadImageCommentsFromRemoteUseCaseTests.swift */,
+			);
+			path = "Image Comment API";
+			sourceTree = "<group>";
+		};
 		952C3A9B2992BF9C00EC864B /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,6 +430,9 @@
 			children = (
 				9500A51C29BA583600A0550B /* FeedImage Presenter */,
 				95B39A9029B7A9150013CCB9 /* Feed Presentation */,
+				95A6AA972A608AE600906BDA /* Shared API */,
+				95A6AA992A608B2800906BDA /* Shared API Infra */,
+				9512DF5A2A6277FC000DD1FB /* Image Comment API */,
 				9562F937294F8ED800EB3964 /* Helper */,
 				95C10DD1295A1037000CBAE8 /* Feed Cache */,
 				955975D4294DEC6C00153928 /* Feed API */,
@@ -440,8 +460,6 @@
 				955975D2294DDDED00153928 /* FeedItemsMapper.swift */,
 				95BBE16F295DAADE00C21B2C /* RemoteFeedItem.swift */,
 				95ED1A2029C4DCF2001EE256 /* RemoteFeedImageDataLoader.swift */,
-				95A6AA8E2A60726300906BDA /* RemoteImageCommentsLoader.swift */,
-				95A6AA902A60739D00906BDA /* ImageCommentsMapper.swift */,
 			);
 			path = "Feed API";
 			sourceTree = "<group>";
@@ -449,11 +467,8 @@
 		955975D4294DEC6C00153928 /* Feed API */ = {
 			isa = PBXGroup;
 			children = (
-				95A6AA972A608AE600906BDA /* Shared API */,
-				95A6AA992A608B2800906BDA /* Shared API Infra */,
 				95501C7D294D043300267920 /* LoadFeedFromRemoteUseCaseTests.swift */,
 				9537849129C23D9D00705EF5 /* RemoteFeedImageDataLoaderTests.swift */,
-				95A6AA8C2A6070FA00906BDA /* LoadImageCommentsFromRemoteUseCaseTests.swift */,
 			);
 			path = "Feed API";
 			sourceTree = "<group>";
@@ -493,6 +508,7 @@
 			children = (
 				95A6AA952A608A7900906BDA /* Shared API */,
 				95A6AA962A608A9D00906BDA /* Shared API Infra */,
+				9512DF592A6277AC000DD1FB /* Image Comment API */,
 				95A6AA922A607E1C00906BDA /* Image Comments Feature */,
 				9500A50129BA4A2C00A0550B /* FeedPresentation */,
 				95414A4F295BFCCE0001E778 /* Feed Cache */,
