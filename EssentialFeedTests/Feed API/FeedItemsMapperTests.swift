@@ -14,7 +14,7 @@ class FeedItemsMapperTests: XCTestCase {
         let jsonData = makeItemsJSON([])
         let samples = [199,201,300,400,500]
         
-        try samples.enumerated().forEach { index, code  in
+        try samples.forEach {  code  in
     
             XCTAssertThrowsError(
                 try FeedItemMapper.map(jsonData,from: HTTPURLResponse(statusCode: code))
@@ -76,16 +76,5 @@ class FeedItemsMapperTests: XCTestCase {
         ].compactMapValues { $0 }
         
         return (item,json)
-    }
-    
-    private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
-        let itemsJSON = ["items": items]
-        return try! JSONSerialization.data(withJSONObject: itemsJSON)
-    }
-}
-
-private extension HTTPURLResponse {
-    convenience init(statusCode: Int) {
-        self.init(url: anyURL(), statusCode: statusCode, httpVersion: nil, headerFields: nil)!
     }
 }
