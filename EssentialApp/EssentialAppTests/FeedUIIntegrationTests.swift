@@ -9,6 +9,7 @@ import XCTest
 import EssentialApp
 import EssentialFeed
 import EssentialFeediOS
+import Combine
 
 final class FeedUIIntegrationTests: XCTestCase {
 
@@ -372,26 +373,29 @@ final class FeedUIIntegrationTests: XCTestCase {
         return UIImage.make(withColor: .red).pngData()!
     }
     
-    class LoaderSpy: FeedLoader, FeedImageDataLoader {
+    class LoaderSpy: FeedImageDataLoader {
       
         //MARK: FeedLoader
-        private var feedRequests = [(FeedLoader.Result) -> Void]()
+        private var feedRequests = [PassthroughSubject<[FeedImage],Error>]()
        
+    
+        func loadPublisher() -> AnyPublisher<[FeedImage], Swift.Error> {
+           let publisher = PassthroughSubject<[FeedImage],Error>()
+            feedRequests.append(publisher)
+            return publisher.eraseToAnyPublisher()
+        }
+        
         var loadFeedCallCount: Int {
             return feedRequests.count
         }
         
-        func load(completion: @escaping (FeedLoader.Result) -> Void) {
-            feedRequests.append(completion)
-        }
-        
         func completeFeedLoading(with feed: [FeedImage] = [], at index: Int = 0) {
-            feedRequests[index](.success(feed))
+            feedRequests[index].send(feed)
         }
         
         func completeFeedLoadingWithError(at index: Int) {
             let error = NSError(domain: "an error", code: 0)
-            feedRequests[index](.failure(error))
+            feedRequests[index].send(completion: .failure(error))
         }
         
         //MARK: ImageDataLoader
