@@ -16,11 +16,6 @@ final class LoadResourcePresenterTests: XCTestCase {
         
         XCTAssertTrue(view.message.isEmpty, "Expected no view message")
     }
-
-    func test_title_isLocalized() {
-       
-        XCTAssertEqual(LoadResourcePresenter.title, localized("FEED_VIEW_TITLE"))
-    }
     
     func test_didStartLoadingFeed_displayNoErrorMessageAndStartLoading() {
         let (sut, view) = makeSUT()

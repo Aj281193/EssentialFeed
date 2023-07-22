@@ -18,12 +18,6 @@ public final class LoadResourcePresenter {
         self.errorView = errorView
     }
     
-    public static var title: String {
-        return NSLocalizedString("FEED_VIEW_TITLE",
-                                 tableName: "EssentialFeedLocalized",
-                                 bundle: Bundle(for: FeedPresenter.self),
-                                 comment: "")
-    }
     private var feedLoadError: String {
         return NSLocalizedString("FEED_VIEW_CONNECTION_ERROR",
                      tableName: "EssentialFeedLocalized",
