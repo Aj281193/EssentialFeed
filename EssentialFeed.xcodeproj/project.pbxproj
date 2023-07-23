@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9500A51029BA521400A0550B /* ResourceLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9500A50F29BA521400A0550B /* ResourceLoadingView.swift */; };
 		9500A51229BA522C00A0550B /* ResourceLoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9500A51129BA522C00A0550B /* ResourceLoadingViewModel.swift */; };
-		9500A51429BA524300A0550B /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9500A51329BA524300A0550B /* FeedView.swift */; };
 		9500A51629BA525C00A0550B /* ResourceErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9500A51529BA525C00A0550B /* ResourceErrorView.swift */; };
 		9500A51829BA527100A0550B /* ResourceErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9500A51729BA527100A0550B /* ResourceErrorViewModel.swift */; };
 		9500A51A29BA55F800A0550B /* FeedLocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9519626E29AD2A2500A87C6C /* FeedLocalizationTests.swift */; };
@@ -153,7 +152,6 @@
 /* Begin PBXFileReference section */
 		9500A50F29BA521400A0550B /* ResourceLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoadingView.swift; sourceTree = "<group>"; };
 		9500A51129BA522C00A0550B /* ResourceLoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoadingViewModel.swift; sourceTree = "<group>"; };
-		9500A51329BA524300A0550B /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		9500A51529BA525C00A0550B /* ResourceErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceErrorView.swift; sourceTree = "<group>"; };
 		9500A51729BA527100A0550B /* ResourceErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceErrorViewModel.swift; sourceTree = "<group>"; };
 		9500A51D29BA585B00A0550B /* FeedImagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImagePresenterTests.swift; sourceTree = "<group>"; };
@@ -306,7 +304,6 @@
 		9500A50C29BA51E800A0550B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9500A51329BA524300A0550B /* FeedView.swift */,
 				95751CE629BBB370002F4477 /* FeedImageViewModel.swift */,
 				95751CE829BBB398002F4477 /* FeedImageView.swift */,
 			);
@@ -965,7 +962,6 @@
 				9537848E29C23B9900705EF5 /* FeedImageDataLoader.swift in Sources */,
 				95A6AA942A607E8300906BDA /* ImageComment.swift in Sources */,
 				95ED1A2529C4EFBC001EE256 /* RemoteFeedImageDataLoader.swift in Sources */,
-				9500A51429BA524300A0550B /* FeedView.swift in Sources */,
 				9500A51229BA522C00A0550B /* ResourceLoadingViewModel.swift in Sources */,
 				95BBE172295DAB1200C21B2C /* LocalFeedImage.swift in Sources */,
 				95751CE529BBB267002F4477 /* FeedImagePresenter.swift in Sources */,
