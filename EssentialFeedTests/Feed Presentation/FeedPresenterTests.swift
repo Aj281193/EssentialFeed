@@ -24,9 +24,9 @@ final class FeedPresenterTests: XCTestCase {
     }
     
     //MARK Helpers:-
-    private  func localized(_ key: String, table: String = "EssentialFeedLocalized", file: StaticString = #filePath, line: UInt = #line) -> String {
+    private  func localized(_ key: String, file: StaticString = #filePath, line: UInt = #line) -> String {
         let bundle = Bundle(for: FeedPresenter.self)
-        
+        let table = "EssentialFeedLocalized"
         let localizedKey = key
         let value = bundle.localizedString(forKey: localizedKey, value: nil, table: table)
         
