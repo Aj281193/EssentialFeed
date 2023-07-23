@@ -70,7 +70,7 @@ final class LoadResourcePresenterTests: XCTestCase {
     private  func localized(_ key: String, file: StaticString = #filePath, line: UInt = #line) -> String {
         let bundle = Bundle(for: SUT.self)
         
-        let table = "EssentialFeedLocalized"
+        let table = "Shared"
         let localizedKey = key
         let value = bundle.localizedString(forKey: localizedKey, value: nil, table: table)
         
