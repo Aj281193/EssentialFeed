@@ -15,9 +15,9 @@ public final class FeedPresenter {
    
     private let feedview: FeedView
     private let loadingView: ResourceLoadingView
-    private let errorView: FeedErrorView
+    private let errorView: ResourceErrorView
     
-    public init(feedview: FeedView, loadingView: ResourceLoadingView, errorView: FeedErrorView) {
+    public init(feedview: FeedView, loadingView: ResourceLoadingView, errorView: ResourceErrorView) {
         self.feedview = feedview
         self.loadingView = loadingView
         self.errorView = errorView
