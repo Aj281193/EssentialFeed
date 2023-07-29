@@ -74,7 +74,7 @@ final class LocalFeedImageDataFromCacheUseCaseTests: XCTestCase {
         
         var sut: LocalFeedImageDataLoader? = LocalFeedImageDataLoader(store: store)
         
-        var received = [RemoteFeedImageDataLoader.Result]()
+        var received = [Swift.Result<Data,Error>]()
         _ = sut?.loadImageData(from: anyURL(), completion: { received.append($0) })
         
         sut = nil
