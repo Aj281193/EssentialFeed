@@ -90,55 +90,6 @@ final class FeedSnapshotTests: XCTestCase {
         ]
     }
     
-    private func assert(snapshot: UIImage, named name: String, file: StaticString = #file, line: UInt = #line) {
-        let snapshotData = makeSnapshotData(for: snapshot, file: file, line: line)
-        let snapshotURL = makeSnapshotURL(named: name, file: file)
-        
-        guard let storeSnapsshotData = try? Data(contentsOf: snapshotURL) else {
-            XCTFail("Failed to load store snapshot at URL: \(snapshotURL). use the record method to store the snapshot before asserting.",file: file,line: line)
-            return
-        }
-        
-        if snapshotData != storeSnapsshotData {
-            let temporarySnapshotURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-                .appendingPathComponent(snapshotURL.lastPathComponent)
-            
-            try? snapshotData?.write(to: temporarySnapshotURL)
-            
-            XCTFail("New snapshot doesn't match the stored snapshot. New snapshot URL: \(temporarySnapshotURL), stored snapshot URL: \(snapshotURL)",file: file,line: line)
-        }
-    }
-    
-    private func record(snapshot: UIImage, named name: String, file: StaticString = #file, line: UInt = #line) {
-        let snapshotURL = makeSnapshotURL(named: name, file: file)
-        let snapshotData = makeSnapshotData(for: snapshot, file: file, line: line)
-        
-        do {
-            try FileManager.default.createDirectory(
-                at: snapshotURL.deletingLastPathComponent(),
-                withIntermediateDirectories: true
-            )
-            
-            try snapshotData?.write(to: snapshotURL)
-        } catch {
-            XCTFail("Failed to record snapshot with error: \(error)", file: file, line: line)
-        }
-    }
-    
-    private func makeSnapshotURL(named name: String, file: StaticString) -> URL {
-        URL(fileURLWithPath: String(describing: file))
-            .deletingLastPathComponent()
-            .appendingPathComponent("snapshots")
-            .appendingPathComponent("\(name).png")
-    }
-    
-    private func makeSnapshotData(for snapshot: UIImage, file: StaticString, line: UInt) -> Data? {
-        guard let snapshotData = snapshot.pngData() else {
-            XCTFail("Failed to generate PNG data representation from snapshot", file: file, line: line)
-            return nil
-        }
-        return snapshotData
-    }
 }
 
 extension UIViewController {
@@ -153,16 +104,16 @@ struct SnapshotConfiguration {
     let safeAreaInsets: UIEdgeInsets
     let layoutMargins: UIEdgeInsets
     let traitCollection: UITraitCollection
-    
+
     static func iPhone8(style: UIUserInterfaceStyle) -> SnapshotConfiguration {
         return SnapshotConfiguration(
             size: CGSize(width: 375, height: 667),
             safeAreaInsets: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0),
-            layoutMargins: UIEdgeInsets(top: 28, left: 8, bottom: 0, right: 8),
+            layoutMargins: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16),
             traitCollection: UITraitCollection(traitsFrom: [
                 .init(forceTouchCapability: .available),
                 .init(layoutDirection: .leftToRight),
-                .init(preferredContentSizeCategory: .large),
+                .init(preferredContentSizeCategory: .medium),
                 .init(userInterfaceIdiom: .phone),
                 .init(horizontalSizeClass: .compact),
                 .init(verticalSizeClass: .regular),

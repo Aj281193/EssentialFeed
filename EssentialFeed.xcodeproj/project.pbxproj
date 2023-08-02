@@ -94,6 +94,7 @@
 		95FD3F0D29C8797400FE2547 /* LocalFeedImageDataFromCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FD3F0C29C8797400FE2547 /* LocalFeedImageDataFromCacheUseCaseTests.swift */; };
 		95FD3F0F29C8E1A400FE2547 /* LocalFeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FD3F0E29C8E1A400FE2547 /* LocalFeedImageDataLoader.swift */; };
 		95FD3F1129C8E25600FE2547 /* FeedImageDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FD3F1029C8E25600FE2547 /* FeedImageDataStore.swift */; };
+		95FE03602A7ADB3A00F873DC /* XCTestCase+SnapshotTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FE035F2A7ADB3A00F873DC /* XCTestCase+SnapshotTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,6 +234,7 @@
 		95FD3F0C29C8797400FE2547 /* LocalFeedImageDataFromCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedImageDataFromCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		95FD3F0E29C8E1A400FE2547 /* LocalFeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedImageDataLoader.swift; sourceTree = "<group>"; };
 		95FD3F1029C8E25600FE2547 /* FeedImageDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataStore.swift; sourceTree = "<group>"; };
+		95FE035F2A7ADB3A00F873DC /* XCTestCase+SnapshotTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+SnapshotTest.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -658,6 +660,7 @@
 			isa = PBXGroup;
 			children = (
 				95D8F02D2A7A167300485D2A /* UIImage+TestHelpers.swift */,
+				95FE035F2A7ADB3A00F873DC /* XCTestCase+SnapshotTest.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -939,6 +942,7 @@
 			files = (
 				958FDD362984098E00B97D8E /* XCTestCase+TrackMemoryLeak.swift in Sources */,
 				95D8F0292A7A101600485D2A /* FeedSnapshotTests.swift in Sources */,
+				95FE03602A7ADB3A00F873DC /* XCTestCase+SnapshotTest.swift in Sources */,
 				95D8F02E2A7A167300485D2A /* UIImage+TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
