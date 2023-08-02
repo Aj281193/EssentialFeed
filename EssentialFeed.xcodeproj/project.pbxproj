@@ -76,6 +76,8 @@
 		95C36959296DA7D500DE34E3 /* XCTestCase+FailableRetriveFeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C36958296DA7D500DE34E3 /* XCTestCase+FailableRetriveFeedStoreSpecs.swift */; };
 		95C3695B296DA80D00DE34E3 /* XCTestCase+FailableInsertFeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C3695A296DA80D00DE34E3 /* XCTestCase+FailableInsertFeedStoreSpecs.swift */; };
 		95C3695D296DA83500DE34E3 /* XCTestCase+FailableDeleteFeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C3695C296DA83500DE34E3 /* XCTestCase+FailableDeleteFeedStoreSpecs.swift */; };
+		95D8F0292A7A101600485D2A /* FeedSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D8F0282A7A101600485D2A /* FeedSnapshotTests.swift */; };
+		95D8F02B2A7A131100485D2A /* snapshots in Resources */ = {isa = PBXBuildFile; fileRef = 95D8F02A2A7A131100485D2A /* snapshots */; };
 		95EC2D87295E94DA007992E3 /* LoadFeedFromCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC2D86295E94DA007992E3 /* LoadFeedFromCacheUseCaseTests.swift */; };
 		95EC2D8A295E981C007992E3 /* FeedStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC2D89295E981C007992E3 /* FeedStoreSpy.swift */; };
 		95ED6D7429B634EC00EA61E5 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95ED6D7329B634EC00EA61E5 /* ErrorView.swift */; };
@@ -214,6 +216,8 @@
 		95C36958296DA7D500DE34E3 /* XCTestCase+FailableRetriveFeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FailableRetriveFeedStoreSpecs.swift"; sourceTree = "<group>"; };
 		95C3695A296DA80D00DE34E3 /* XCTestCase+FailableInsertFeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FailableInsertFeedStoreSpecs.swift"; sourceTree = "<group>"; };
 		95C3695C296DA83500DE34E3 /* XCTestCase+FailableDeleteFeedStoreSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FailableDeleteFeedStoreSpecs.swift"; sourceTree = "<group>"; };
+		95D8F0282A7A101600485D2A /* FeedSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSnapshotTests.swift; sourceTree = "<group>"; };
+		95D8F02A2A7A131100485D2A /* snapshots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = snapshots; sourceTree = "<group>"; };
 		95EC2D86295E94DA007992E3 /* LoadFeedFromCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFeedFromCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		95EC2D89295E981C007992E3 /* FeedStoreSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStoreSpy.swift; sourceTree = "<group>"; };
 		95ED6D7329B634EC00EA61E5 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -395,6 +399,7 @@
 				959EB53F29522D32000AC421 /* EssentialFeedAPIEndToEndTests */,
 				95EE48032973E3600032BA2E /* EssentialFeedCacheIntegrationTests */,
 				952DEE4E29827EB600924576 /* EssentialFeediOS */,
+				95D8F0272A7A0FC300485D2A /* EssentialFeediOSTests */,
 				95501C61294D037000267920 /* Products */,
 				958FDD2D2984007A00B97D8E /* Frameworks */,
 				95B06E4D29BC82410024819A /* Recovered References */,
@@ -634,6 +639,15 @@
 			path = FeedStoreSpecs;
 			sourceTree = "<group>";
 		};
+		95D8F0272A7A0FC300485D2A /* EssentialFeediOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				95D8F02A2A7A131100485D2A /* snapshots */,
+				95D8F0282A7A101600485D2A /* FeedSnapshotTests.swift */,
+			);
+			path = EssentialFeediOSTests;
+			sourceTree = "<group>";
+		};
 		95ED871E29C62B5F00D35139 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -852,6 +866,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95D8F02B2A7A131100485D2A /* snapshots in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -908,6 +923,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				958FDD362984098E00B97D8E /* XCTestCase+TrackMemoryLeak.swift in Sources */,
+				95D8F0292A7A101600485D2A /* FeedSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
