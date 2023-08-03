@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol FeedErrorView {
-    func display(_ viewModel: FeedErrorViewModel)
+public protocol ResourceErrorView {
+    func display(_ viewModel: ResourceErrorViewModel)
 }

@@ -29,3 +29,26 @@ extension HTTPURLResponse {
         self.init(url: anyURL(), statusCode: statusCode, httpVersion: nil, headerFields: nil)!
     }
 }
+
+extension Date {
+    
+    private var  feedCacheMaxAgeInDays: Int {
+        return 7
+    }
+    
+    func minusFeedCacheMaxAge() -> Date {
+        return adding(days: -feedCacheMaxAgeInDays)
+    }
+    
+    func adding(minutes: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
+        return calendar.date(byAdding: .minute, value: minutes, to: self)!
+    }
+    
+   func adding(days: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
+        return calendar.date(byAdding: .day, value: days, to: self)!
+    }
+    
+    func adding(seconds: TimeInterval) -> Date {
+        return self + seconds
+    }
+}
