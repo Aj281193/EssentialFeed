@@ -10,6 +10,12 @@ import EssentialFeediOS
 
 extension ListViewController {
     
+    public override func loadViewIfNeeded() {
+          super.loadViewIfNeeded()
+
+          tableView.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
+    }
+    
     var errorMessage: String? {
         return errorView.message
     }
@@ -64,6 +70,17 @@ extension ListViewController {
         return view!
     }
     
+  
+    @discardableResult
+    func simulateFeedImageBecomingVisibleAgain(at row: Int) -> FeedImageCell? {
+        let view = simulatedFeedImageViewNotVisible(at: row)
+
+        let delegate = tableView.delegate
+        let index = IndexPath(row: row, section: feedImageSection)
+        delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
+
+        return view
+    }
     
     func feedImageView(at row: Int) -> UITableViewCell? {
         guard numbderOfRenderFeedImageView() > row else {
