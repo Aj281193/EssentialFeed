@@ -57,66 +57,53 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         
     }
     
-    override func test_loadFeedCompletion_renderSuccessFullyLoadedFeed() {
-        let image0 = makeImage(description: "any description",location: "any location")
-        let image1 = makeImage(description: nil,location: "any location")
-        let image2 = makeImage(description: "any description",location: nil)
-        let image3 = makeImage(description: nil,location: nil)
+    func test_loadCommentsCompletion_renderSuccessFullyLoadedComments() {
+        let comment0 = makeComments(message: "a message",username: "a username")
+        let comment1 = makeComments(message: "another message",username: "another username")
+        
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
-        assertThat(sut, isRendring: [])
+        assertThat(sut, isRendring: [ImageComment]())
         
-        loader.completeCommentsLoading(with: [image0], at: 0)
-        assertThat(sut, isRendring: [image0])
+        loader.completeCommentsLoading(with: [comment0], at: 0)
+        assertThat(sut, isRendring: [comment0])
 
         
         sut.simulateUserInitiatedReload()
-        loader.completeCommentsLoading(with: [image0,image1,image2,image3],at: 1)
-        assertThat(sut, isRendring: [image0,image1,image2,image3])
+        loader.completeCommentsLoading(with: [comment0,comment1],at: 1)
+        assertThat(sut, isRendring: [comment0,comment1])
     }
     
-    override func test_loadFeedCompletion_renderSuccessFullyLoadedEmptyFeedAfterNonEmptyFeed() {
-        let image0 = makeImage()
-        let image1 = makeImage()
+     func test_loadCommentsCompletion_renderSuccessFullyLoadedEmptyCommentsAfterNonEmptyComment() {
+        let comment = makeComments()
         
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
         
-        loader.completeCommentsLoading(with: [image0,image1],at: 0)
-        assertThat(sut, isRendring: [image0,image1])
+        loader.completeCommentsLoading(with: [comment],at: 0)
+        assertThat(sut, isRendring: [comment])
         
         sut.simulateUserInitiatedReload()
         loader.completeCommentsLoading(with: [],at: 1)
-        assertThat(sut, isRendring: [])
+        assertThat(sut, isRendring: [ImageComment]())
         
     }
     
-    override func test_loadFeedCompletion_doesNotAlterRenderStateOnError() {
-        let image0 = makeImage()
-        
+     func test_loadFCompletion_doesNotAlterRenderStateOnError() {
+        let comment = makeComments()
         let (sut,loader) = makeSUT()
         
         sut.loadViewIfNeeded()
-        loader.completeCommentsLoading(with: [image0], at: 0)
-        assertThat(sut, isRendring: [image0])
+        loader.completeCommentsLoading(with: [comment], at: 0)
+        assertThat(sut, isRendring: [comment])
         
         sut.simulateUserInitiatedReload()
         loader.completeCommentsLoadingWithError(at: 1)
-        assertThat(sut, isRendring: [image0])
+        assertThat(sut, isRendring: [comment])
     }
     
-    override func test_loadFeedCompletion_dispatchesFromBackgroundToMainThread() {
-        let (sut, loader) = makeSUT()
-        sut.loadViewIfNeeded()
 
-        let exp = expectation(description: "Wait for background queue")
-        DispatchQueue.global().async {
-            loader.completeCommentsLoading(at: 0)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1.0)
-    }
 
     override func test_loadFeedCompletion_rendersErrorMessageOnErrorUntilNextReload() {
         let (sut, loader) = makeSUT()
@@ -154,17 +141,30 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         return (sut,loader)
     }
         
-    private func makeImage(description: String? = nil, location: String? = nil, url: URL = URL(string: "http://any-url.com")!) -> FeedImage {
-       return FeedImage(id: UUID(), description: description, location: location, url: url)
+    private func makeComments(message: String = "any message", username: String = "any username") -> ImageComment {
+       return ImageComment(id: UUID(), message: message, createdAt: Date(), userName: username)
+    }
+    
+    private func assertThat(_ sut: ListViewController, isRendring comments: [ImageComment], file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(sut.numberOfRenderComments(), comments.count , "comments count", file: file, line: line)
+        
+        let viewModel = ImageCommentsPresenter.map(comments)
+        
+        viewModel.comments.enumerated().forEach { index, comment in
+            XCTAssertEqual(sut.commentMessage(at: index), comment.message ,"message at \(index)",file: file,line: line)
+            XCTAssertEqual(sut.commentDate(at: index), comment.date ,"date at \(index)",file: file,line: line)
+            
+            XCTAssertEqual(sut.commentUsername(at: index), comment.username ,"username at \(index)",file: file,line: line)
+        }
     }
     
     private class LoaderSpy {
         
-        private var requests = [PassthroughSubject<[FeedImage],Error>]()
+        private var requests = [PassthroughSubject<[ImageComment],Error>]()
         
         
-        func loadPublisher() -> AnyPublisher<[FeedImage], Swift.Error> {
-            let publisher = PassthroughSubject<[FeedImage],Error>()
+        func loadPublisher() -> AnyPublisher<[ImageComment], Swift.Error> {
+            let publisher = PassthroughSubject<[ImageComment],Error>()
             requests.append(publisher)
             return publisher.eraseToAnyPublisher()
         }
@@ -173,8 +173,8 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
             return requests.count
         }
         
-        func completeCommentsLoading(with feed: [FeedImage] = [], at index: Int = 0) {
-            requests[index].send(feed)
+        func completeCommentsLoading(with comments: [ImageComment] = [], at index: Int = 0) {
+            requests[index].send(comments)
         }
         
         func completeCommentsLoadingWithError(at index: Int) {
