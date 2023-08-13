@@ -8,14 +8,24 @@
 import XCTest
 import EssentialFeediOS
 
-extension FeedViewController {
+extension ListViewController {
+    
+    public override func loadViewIfNeeded() {
+          super.loadViewIfNeeded()
+
+          tableView.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
+    }
     
     var errorMessage: String? {
-        return errorView?.message
+        return errorView.message
     }
     
     var isShowingLoadingIndicator: Bool {
         return refreshControl?.isRefreshing == true
+    }
+    
+    func simulateErrorViewTap() {
+        errorView.simulateTap()
     }
     
     func simulateUserInitiatedFeedReload() {
@@ -37,7 +47,8 @@ extension FeedViewController {
     }
     
     func numbderOfRenderFeedImageView() -> Int {
-        return tableView.numberOfRows(inSection: feedImageSection)
+        return tableView.numberOfSections == 0 ? 0 :
+            tableView.numberOfRows(inSection: feedImageSection)
     }
     
     @discardableResult
@@ -59,6 +70,17 @@ extension FeedViewController {
         return view!
     }
     
+  
+    @discardableResult
+    func simulateFeedImageBecomingVisibleAgain(at row: Int) -> FeedImageCell? {
+        let view = simulatedFeedImageViewNotVisible(at: row)
+
+        let delegate = tableView.delegate
+        let index = IndexPath(row: row, section: feedImageSection)
+        delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
+
+        return view
+    }
     
     func feedImageView(at row: Int) -> UITableViewCell? {
         guard numbderOfRenderFeedImageView() > row else {

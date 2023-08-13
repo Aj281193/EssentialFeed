@@ -13,8 +13,8 @@ public protocol FeedImageCellControllerDelegate {
     func didCancelImageRequest()
 }
 
-public final class FeedImageCellController:  ResourceView , ResourceLoadingView, ResourceErrorView {
-
+public final class FeedImageCellController: NSObject {
+    
     public typealias ResourceViewModel = UIImage
     
     private let viewModel: FeedImageViewModel
@@ -25,13 +25,22 @@ public final class FeedImageCellController:  ResourceView , ResourceLoadingView,
         self.viewModel = viewModel
         self.delegate = delegate
     }
+}
+
+extension FeedImageCellController:  UITableViewDataSource , UITableViewDelegate,  UITableViewDataSourcePrefetching {
     
-    public func view(in tableView: UITableView) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         cell = tableView.dequeueReusableCell()
         cell?.locationContainer.isHidden = viewModel.hasLoaction
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description
-        cell?.retry = delegate.didRequestImage
+        cell?.retry = { [weak self] in
+            self?.delegate.didRequestImage()
+        }
         cell?.onReuse = { [weak self] in
             self?.releaseCellAfterReuse()
         }
@@ -39,8 +48,35 @@ public final class FeedImageCellController:  ResourceView , ResourceLoadingView,
         return cell!
     }
     
-    public func display(_ viewModel: FeedImageViewModel) { }
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.cell = nil
+        delegate.didCancelImageRequest()
+    }
     
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.cell = cell as? FeedImageCell
+        delegate.didRequestImage()
+    }
+    
+    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        delegate.didRequestImage()
+    }
+    
+    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        cancelLoad()
+    }
+    
+    private func cancelLoad() {
+        releaseCellAfterReuse()
+        delegate.didCancelImageRequest()
+    }
+    
+    private func releaseCellAfterReuse() {
+        cell = nil
+    }
+}
+
+extension FeedImageCellController: ResourceView , ResourceLoadingView, ResourceErrorView {
     public func display(_ viewModel: UIImage) {
         cell?.feedImageView.setImageAnimated(viewModel)
     }
@@ -51,21 +87,6 @@ public final class FeedImageCellController:  ResourceView , ResourceLoadingView,
     
     public func display(_ viewModel: ResourceErrorViewModel) {
         cell?.feedImageRetryButton.isHidden = viewModel.message == nil
-    }
-    
-
-    
-    func preload() {
-        delegate.didRequestImage()
-    }
-    
-    func cancelLoad() {
-        releaseCellAfterReuse()
-        delegate.didCancelImageRequest()
-    }
-    
-    func releaseCellAfterReuse() {
-        cell = nil
     }
 }
 
