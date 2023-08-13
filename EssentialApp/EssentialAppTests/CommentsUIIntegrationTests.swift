@@ -90,7 +90,7 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         
     }
     
-     func test_loadFCompletion_doesNotAlterRenderStateOnError() {
+     func test_loadCommentsCompletion_doesNotAlterRenderStateOnError() {
         let comment = makeComments()
         let (sut,loader) = makeSUT()
         
@@ -103,7 +103,17 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         assertThat(sut, isRendring: [comment])
     }
     
+    func test_loadCommentsCompletion_dispatchesFromBackgroundToMainThread() {
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
 
+        let exp = expectation(description: "Wait for background queue")
+        DispatchQueue.global().async {
+            loader.completeCommentsLoading(at: 0)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
 
     override func test_loadFeedCompletion_rendersErrorMessageOnErrorUntilNextReload() {
         let (sut, loader) = makeSUT()
