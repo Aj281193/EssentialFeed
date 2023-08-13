@@ -106,13 +106,13 @@ final class CommentsUIIntegrationTests: XCTestCase {
     func test_loadCommentsCompletion_dispatchesFromBackgroundToMainThread() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
-
+        
         let exp = expectation(description: "Wait for background queue")
         DispatchQueue.global().async {
             loader.completeCommentsLoading(at: 0)
             exp.fulfill()
         }
-        wait(for: [exp], timeout: 2.0)
+        wait(for: [exp], timeout: 1.0)
     }
 
     func test_loadCommentsCompletion_rendersErrorMessageOnErrorUntilNextReload() {
@@ -142,6 +142,29 @@ final class CommentsUIIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.errorMessage, nil)
     }
  
+    func test_deinit_cancelsRunningRequest() {
+        var cancelCallCount = 0
+        var sut: ListViewController?
+        
+        autoreleasepool {
+             sut = CommentsUIComposer.commentsComposedWith {
+                PassthroughSubject<[ImageComment], Error>().handleEvents(receiveCancel:  {
+                    cancelCallCount += 1
+                }).eraseToAnyPublisher()
+            }
+            
+            sut?.loadViewIfNeeded()
+        }
+       
+        weak var weakRef = sut
+        XCTAssertEqual(cancelCallCount, 0)
+        
+        sut = nil
+        
+        XCTAssertNil(weakRef)
+        XCTAssertEqual(cancelCallCount, 1)
+    }
+    
     //Mark:- Helpers
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
