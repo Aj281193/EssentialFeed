@@ -20,7 +20,6 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
        UITableViewDiffableDataSource<Int, CellController> = {
         .init(tableView: tableView) { (tableView, indexPath, controller)
             -> UITableViewCell? in
-            print("\(indexPath.row)")
             return controller.dataSource.tableView(tableView, cellForRowAt: indexPath)
         }
     }()
