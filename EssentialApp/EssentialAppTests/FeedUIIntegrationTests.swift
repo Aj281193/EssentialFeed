@@ -20,7 +20,7 @@ class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.title, feedTitle)
     }
      
-    func test_imageSelectionNotifiesHandler() {
+    func test_imageSelection_notifiesHandler() {
         let image0 = makeImage()
         let image1 = makeImage()
         var selectedImages = [FeedImage]()
