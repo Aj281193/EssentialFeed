@@ -20,7 +20,6 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
        UITableViewDiffableDataSource<Int, CellController> = {
         .init(tableView: tableView) { (tableView, indexPath, controller)
             -> UITableViewCell? in
-            print("\(indexPath.row)")
             return controller.dataSource.tableView(tableView, cellForRowAt: indexPath)
         }
     }()
@@ -78,12 +77,17 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
         onRefresh?()
     }
 
-   
+    public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let dl = cellController(at: indexPath)?.delegate
+        dl?.tableView?(tableView, didSelectRowAt: indexPath)
+    }
+    
     public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let dl = cellController(at: indexPath)?.delegate
         dl?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
     }
     
+
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let dl = cellController(at: indexPath)?.delegate
        dl?.tableView?(tableView, didEndDisplaying: cell, forRowAt: indexPath)
