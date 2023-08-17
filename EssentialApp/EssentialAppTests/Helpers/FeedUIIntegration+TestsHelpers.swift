@@ -16,6 +16,20 @@ extension ListViewController {
         tableView.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
     }
     
+    func numberOfRows(in section: Int) -> Int {
+      tableView.numberOfSections > section ? section :
+            tableView.numberOfRows(inSection: section)
+    }
+    
+    func cell(row: Int, section: Int) -> UITableViewCell? {
+        guard numberOfRenderComments() > row else {
+            return nil
+        }
+        let ds = tableView.dataSource
+        let index = IndexPath(row: row, section: section)
+        return ds?.tableView(tableView, cellForRowAt: index) as? ImageCommentCell
+    }
+    
     var errorMessage: String? {
         return errorView.message
     }
@@ -55,8 +69,7 @@ extension ListViewController {
     }
     
     func numbderOfRenderFeedImageView() -> Int {
-        return tableView.numberOfSections == 0 ? 0 :
-        tableView.numberOfRows(inSection: feedImageSection)
+        numberOfRows(in: feedImageSection)
     }
     
     
@@ -125,12 +138,7 @@ extension ListViewController {
     }
     
     private func commentView(at row: Int) -> ImageCommentCell? {
-        guard numberOfRenderComments() > row else {
-            return nil
-        }
-        let ds = tableView.dataSource
-        let index = IndexPath(row: row, section: commentsSection)
-        return ds?.tableView(tableView, cellForRowAt: index) as? ImageCommentCell
+        cell(row: row, section: commentsSection) as? ImageCommentCell
     }
     
     private var commentsSection: Int {
