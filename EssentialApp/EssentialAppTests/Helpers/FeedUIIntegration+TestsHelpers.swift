@@ -17,7 +17,7 @@ extension ListViewController {
     }
     
     func numberOfRows(in section: Int) -> Int {
-      tableView.numberOfSections > section ? section :
+      tableView.numberOfSections == section ? section :
             tableView.numberOfRows(inSection: section)
     }
     
