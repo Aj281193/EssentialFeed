@@ -62,10 +62,12 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
         errorView.message = viewModel.message
     }
     
-    public func display(_ cellController: [CellController]) {
+    public func display(_ sections: [CellController]...) {
         var snapshot = NSDiffableDataSourceSnapshot<Int,CellController>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(cellController, toSection: 0)
+        sections.enumerated().forEach { section, cellControllers in
+            snapshot.appendSections([section])
+            snapshot.appendItems(cellControllers, toSection: section)
+        }
         if #available(iOS 15.0, *) {
             dataSource.applySnapshotUsingReloadData(snapshot)
         } else {
