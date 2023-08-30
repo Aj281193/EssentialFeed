@@ -7,10 +7,6 @@
 
 import Foundation
 
-public struct FeedViewModel {
-    public let feed: [FeedImage]
-}
-
 public final class FeedPresenter {
    
     public static var title: String {
@@ -20,8 +16,5 @@ public final class FeedPresenter {
                 comment: "")
     }
   
-    public static func map(_ feed: [FeedImage]) -> FeedViewModel {
-        FeedViewModel(feed: feed)
-    }
 }
 
