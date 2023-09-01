@@ -30,7 +30,7 @@ final class FeedAcceptanceTests: XCTestCase {
         
         let offlineFeed = launch(httpClient: .offline,store: sharedStore)
         XCTAssertEqual(offlineFeed.numbderOfRenderFeedImageView(), 2)
-        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 0), makeImageData(), makeImageData0())
+        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 0),makeImageData0())
         XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 1), makeImageData1())
         
     }
