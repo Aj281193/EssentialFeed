@@ -16,7 +16,7 @@ final class FeedAcceptanceTests: XCTestCase {
         
         let feed = launch(httpClient: .online(response),store: .empty)
 
-        XCTAssertEqual(feed.numbderOfRenderFeedImageView(), 2)
+        XCTAssertEqual(feed.numberOfRenderedFeedImageViews(), 2)
         XCTAssertEqual(feed.renderedFeedImageData(at: 0),makeImageData0())
         XCTAssertEqual(feed.renderedFeedImageData(at: 1), makeImageData1())
         
@@ -25,11 +25,11 @@ final class FeedAcceptanceTests: XCTestCase {
     func test_onLaunch_displayCachedRemoteFeedWhenCustomerHasNoConnectivity() {
         let sharedStore = InMemoryFeedStore.empty
         let onlineFeed = launch(httpClient: .online(response),store: sharedStore)
-        onlineFeed.simulatedFeedImageViewVisible(at: 0)
-        onlineFeed.simulatedFeedImageViewVisible(at: 1)
+        onlineFeed.simulateFeedImageViewVisible(at: 0)
+        onlineFeed.simulateFeedImageViewVisible(at: 1)
         
         let offlineFeed = launch(httpClient: .offline,store: sharedStore)
-        XCTAssertEqual(offlineFeed.numbderOfRenderFeedImageView(), 2)
+        XCTAssertEqual(offlineFeed.numberOfRenderedFeedImageViews(), 2)
         XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 0),makeImageData0())
         XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 1), makeImageData1())
         
@@ -38,7 +38,7 @@ final class FeedAcceptanceTests: XCTestCase {
     func test_onLaunch_displayEmptyFeedWhenCustomerHasNoConnectivityAndNoCache() {
         let feed = launch(httpClient: .offline, store: .empty)
         
-        XCTAssertEqual(feed.numbderOfRenderFeedImageView(), 0)
+        XCTAssertEqual(feed.numberOfRenderedFeedImageViews(), 0)
     }
     
     func test_onEnteringBackground_deleteExpiredFeedCache() {
@@ -60,7 +60,7 @@ final class FeedAcceptanceTests: XCTestCase {
     func test_onFeedImageSelection_displaysComments() {
         let comments = showCommentsForFirstImage()
         
-        XCTAssertEqual(comments.numberOfRenderComments(), 1)
+        XCTAssertEqual(comments.numberOfRenderedComments(), 1)
         XCTAssertEqual(comments.commentMessage(at: 0), makeCommentMessage())
     }
     
@@ -81,7 +81,7 @@ final class FeedAcceptanceTests: XCTestCase {
     private func showCommentsForFirstImage() -> ListViewController {
         let feed = launch(httpClient: .online(response), store: .empty)
         
-        feed.simulateOnTapFeedImage(at: 0)
+        feed.simulateTapOnFeedImage(at: 0)
         RunLoop.current.run(until: Date())
         
         let nav = feed.navigationController
