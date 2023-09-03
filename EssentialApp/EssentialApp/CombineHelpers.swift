@@ -10,6 +10,20 @@ import Combine
 import EssentialFeed
 
 public extension Paginated {
+    // convert combine publisher to closure
+    init(items : [Item], loadMorePublisher: (() -> AnyPublisher<Self, Error>)?) {
+        self.init(items: items, loadMore: loadMorePublisher.map({ publisher in
+            return { completion in
+                publisher().subscribe(Subscribers.Sink(receiveCompletion: { result in
+                    if case let .failure(error) = result {
+                        completion(.failure(error))
+                    }
+                }, receiveValue: { result in
+                    completion(.success(result))
+                }))
+            }
+        }))
+    }
     
     // convert closure to combine publisher
     var loadMorePublisher: (() -> AnyPublisher<Self, Error>)? {
