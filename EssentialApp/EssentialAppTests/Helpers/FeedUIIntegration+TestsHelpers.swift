@@ -106,7 +106,7 @@ extension ListViewController {
         return loadMoreFeedCell()?.isLoading == true
     }
     
-    var loadMoreFeedErrorMessage: String? {
+   var loadMoreFeedErrorMessage: String? {
         return loadMoreFeedCell()?.message
     }
     
