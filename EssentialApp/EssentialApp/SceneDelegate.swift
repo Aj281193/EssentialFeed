@@ -69,15 +69,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.pushViewController(comments, animated: true)
     }
     
-    private func makeRemoteLoadMoreLoader(items: [FeedImage], last: FeedImage?) -> AnyPublisher<Paginated<FeedImage>, Error> {
+    private func makeRemoteLoadMoreLoader(last: FeedImage?) -> AnyPublisher<Paginated<FeedImage>, Error> {
         
        makeRemoteFeedLoader(after: last)
-            .map { newItems in
-                return (items + newItems, newItems.last)
+            .zip(localFeedLoader.loadPublisher())
+            .map {  (newItems, cachedItems) in
+                return (cachedItems + newItems, newItems.last)
             }.map(makePage)
             .caching(to: localFeedLoader)
-        
-        
     }
     
     private func makeRemoteFeedLoaderWithLocalFallback() -> AnyPublisher<Paginated<FeedImage>, Error> {
@@ -104,7 +103,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func makePage(items: [FeedImage], last: FeedImage?) -> Paginated<FeedImage> {
         Paginated(items: items, loadMorePublisher: last.map { last in
-            { self.makeRemoteLoadMoreLoader(items: items, last: last) }
+            { self.makeRemoteLoadMoreLoader(last: last) }
         })
     }
     
