@@ -14,7 +14,7 @@ extension FeedUIIntegrationTests {
   func assertThat(_ sut: ListViewController, isRendring feed: [FeedImage], file: StaticString = #filePath, line: UInt = #line) {
         sut.view.enforceLayoutCycle()
         
-        XCTAssertEqual(sut.numbderOfRenderFeedImageView(), feed.count)
+        XCTAssertEqual(sut.numberOfRenderedFeedImageViews(), feed.count)
         
         feed.enumerated().forEach { index, image in
             assertThat(sut, hasConfiguredFor: image, at: index)

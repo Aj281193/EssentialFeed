@@ -179,7 +179,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
     }
     
     private func assertThat(_ sut: ListViewController, isRendring comments: [ImageComment], file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertEqual(sut.numberOfRenderComments(), comments.count , "comments count", file: file, line: line)
+        XCTAssertEqual(sut.numberOfRenderedComments(), comments.count , "comments count", file: file, line: line)
         
         let viewModel = ImageCommentsPresenter.map(comments)
         

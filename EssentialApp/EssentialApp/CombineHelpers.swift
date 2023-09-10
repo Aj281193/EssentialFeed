@@ -9,6 +9,34 @@ import Foundation
 import Combine
 import EssentialFeed
 
+public extension Paginated {
+    // convert combine publisher to closure
+    init(items : [Item], loadMorePublisher: (() -> AnyPublisher<Self, Error>)?) {
+        self.init(items: items, loadMore: loadMorePublisher.map({ publisher in
+            return { completion in
+                publisher().subscribe(Subscribers.Sink(receiveCompletion: { result in
+                    if case let .failure(error) = result {
+                        completion(.failure(error))
+                    }
+                }, receiveValue: { result in
+                    completion(.success(result))
+                }))
+            }
+        }))
+    }
+    
+    // convert closure to combine publisher
+    var loadMorePublisher: (() -> AnyPublisher<Self, Error>)? {
+        guard let loadMore = loadMore else { return nil }
+        
+        return {
+            Deferred {
+                Future(loadMore)
+            }.eraseToAnyPublisher()
+        }
+    }
+}
+
 public extension LocalFeedLoader {
     typealias Publisher = AnyPublisher<[FeedImage], Swift.Error>
     
@@ -19,8 +47,13 @@ public extension LocalFeedLoader {
     }
 }
 
-extension Publisher where Output == [FeedImage] {
-    func caching(to cache: FeedCache) -> AnyPublisher<Output, Failure> {
+extension Publisher {
+    func caching(to cache: FeedCache) -> AnyPublisher<Output, Failure> where Output == [FeedImage] {
+        handleEvents(receiveOutput: cache.saveIgnoreResult)
+        .eraseToAnyPublisher()
+    }
+    
+    func caching(to cache: FeedCache) -> AnyPublisher<Output, Failure> where Output == Paginated<FeedImage> {
         handleEvents(receiveOutput: cache.saveIgnoreResult)
         .eraseToAnyPublisher()
     }
@@ -35,6 +68,10 @@ extension Publisher {
 private extension FeedCache {
     func saveIgnoreResult(_ feed: [FeedImage]) {
         self.save(feed) { _ in }
+    }
+    
+    func saveIgnoreResult(_ page: Paginated<FeedImage>) {
+        self.save(page.items) { _ in }
     }
 }
 
