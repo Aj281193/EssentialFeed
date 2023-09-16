@@ -64,12 +64,16 @@ extension LocalFeedImageDataLoader: FeedImageDataLoader {
     
     public func loadImageData(from url: URL, completion: @escaping (loadResult) -> Void) -> FeedImageDataLoaderTask {
         let task = loadImageDataTask(completion)
-        store.retrieve(dataFromURL: url) { [weak self] result in
-            guard self != nil else { return }
-            task.complete(with: result
-                .mapError{ _ in LoadError.failed}.flatMap{ data in data.map { .success($0)} ?? .failure(LoadError.notFound) }
-                )
-        }
+        
+        task.complete(
+            with: Swift.Result {
+                try store.retrieve(dataFromURL: url)
+            }
+                .mapError { _ in LoadError.failed }
+                .flatMap { data in
+                    data.map { .success($0) } ?? .failure(LoadError.notFound)
+        })
+        
         return task
     }
 }
