@@ -95,7 +95,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
     private func expect(_ sut: CoreDataFeedStore, toCompleteRetrievalWith expectedResult: FeedImageDataStore.RetrievalResult, for url: URL, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "wait for load completion")
         
-        sut.completeRetrieval(dataFromURL: url) { receivedResult in
+        sut.retrieve(dataFromURL: url) { receivedResult in
             switch(receivedResult,expectedResult) {
             case let (.success(receivedData), .success(expectedData)):
                 XCTAssertEqual(receivedData, expectedData,file: file,line: line)

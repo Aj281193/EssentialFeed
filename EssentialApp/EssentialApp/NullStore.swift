@@ -13,7 +13,7 @@ class NullStore: FeedStore & FeedImageDataStore {
         completion(.success(()))
     }
     
-    func completeRetrieval(dataFromURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
+    func retrieve(dataFromURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
         completion(.success(.none))
     }
     

@@ -158,7 +158,7 @@ final class FeedAcceptanceTests: XCTestCase {
             completion(.success(()))
         }
         
-        func completeRetrieval(dataFromURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
+        func retrieve(dataFromURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
             completion(.success(feedImageDataCache[url]))
         }
         
