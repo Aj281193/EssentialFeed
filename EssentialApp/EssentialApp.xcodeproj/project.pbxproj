@@ -26,6 +26,7 @@
 		955FAA722A50982400F084FF /* FeedUIIntegrationTests+UIRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955FAA692A50982400F084FF /* FeedUIIntegrationTests+UIRefresh.swift */; };
 		955FAA732A50982400F084FF /* UIView+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955FAA642A50982400F084FF /* UIView+TestHelpers.swift */; };
 		955FAA752A50983C00F084FF /* FeedUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955FAA742A50983C00F084FF /* FeedUIIntegrationTests.swift */; };
+		9577D1B72AB0D138003019FD /* NullStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9577D1B62AB0D138003019FD /* NullStore.swift */; };
 		957FEA102A88DEC4003C2700 /* CommentsUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957FEA0F2A88DEC4003C2700 /* CommentsUIIntegrationTests.swift */; };
 		957FEA122A88E085003C2700 /* CommentsUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957FEA112A88E085003C2700 /* CommentsUIComposer.swift */; };
 		959E9C6829D9928D00DABE63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959E9C6729D9928D00DABE63 /* AppDelegate.swift */; };
@@ -85,6 +86,7 @@
 		955FAA692A50982400F084FF /* FeedUIIntegrationTests+UIRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+UIRefresh.swift"; sourceTree = "<group>"; };
 		955FAA6B2A50982400F084FF /* FeedUIIntegrationTests+FeedImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+FeedImageCell.swift"; sourceTree = "<group>"; };
 		955FAA742A50983C00F084FF /* FeedUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedUIIntegrationTests.swift; sourceTree = "<group>"; };
+		9577D1B62AB0D138003019FD /* NullStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullStore.swift; sourceTree = "<group>"; };
 		957FEA0F2A88DEC4003C2700 /* CommentsUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsUIIntegrationTests.swift; sourceTree = "<group>"; };
 		957FEA112A88E085003C2700 /* CommentsUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsUIComposer.swift; sourceTree = "<group>"; };
 		959E9C6429D9928D00DABE63 /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +175,7 @@
 				955FAA552A50967E00F084FF /* LoadResourcePresentationAdapter.swift */,
 				9544D3112A5977B5000130F4 /* CombineHelpers.swift */,
 				957FEA112A88E085003C2700 /* CommentsUIComposer.swift */,
+				9577D1B62AB0D138003019FD /* NullStore.swift */,
 			);
 			path = EssentialApp;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			files = (
 				959E9C6C29D9928D00DABE63 /* ViewController.swift in Sources */,
 				95204D3D2A8ABD1D00416B6A /* FeedUIComposer.swift in Sources */,
+				9577D1B72AB0D138003019FD /* NullStore.swift in Sources */,
 				959E9C6829D9928D00DABE63 /* AppDelegate.swift in Sources */,
 				9544D3122A5977B6000130F4 /* CombineHelpers.swift in Sources */,
 				955FAA562A50967E00F084FF /* LoadResourcePresentationAdapter.swift in Sources */,
