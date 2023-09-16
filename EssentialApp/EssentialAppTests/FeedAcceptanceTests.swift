@@ -145,6 +145,7 @@ final class FeedAcceptanceTests: XCTestCase {
     }
     
     private class InMemoryFeedStore: FeedStore, FeedImageDataStore {
+     
         
         var feedCache: CacheFeed?
         private var feedImageDataCache: [URL: Data] = [:]
@@ -153,15 +154,16 @@ final class FeedAcceptanceTests: XCTestCase {
             self.feedCache = feedCache
         }
         
-        func insert(_ data: Data, for url: URL, completion: @escaping (FeedImageDataStore.InsertionResult) -> Void) {
+        // FeedImageDataStore
+        func insert(_ data: Data, for url: URL) throws {
             feedImageDataCache[url] = data
-            completion(.success(()))
         }
         
-        func retrieve(dataFromURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-            completion(.success(feedImageDataCache[url]))
+        func retrieve(dataFromURL url: URL) throws -> Data? {
+            feedImageDataCache[url]
         }
         
+        // FeedStore
         func deleteCacheFeed(completion: @escaping DeletionCompletion) {
             feedCache = nil
             completion(.success(()))
