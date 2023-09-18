@@ -142,30 +142,24 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
     }
     
     private func save(_ data: Data, for url: URL, with loader: LocalFeedImageDataLoader,file: StaticString = #filePath, line: UInt = #line){
-        let saveExp =  expectation(description: "Wait for Save completion")
-        loader.save(data, for: url) { result in
-            if case let Result.failure(error) = result {
-                XCTFail("Expected to save image data successfully got error \(error)",file: file,line: line)
-            }
-            saveExp.fulfill()
+        do {
+            try loader.save(data, for: url)
+        } catch {
+            XCTFail("Expected to save image data successfully, got error: \(error)", file: file, line: line)
         }
-        wait(for: [saveExp], timeout: 1.0)
     }
     
     private func expect(_ sut: LocalFeedImageDataLoader, toLoad expectedData: Data, for url: URL, file: StaticString = #filePath, line: UInt = #line) {
-        let exp = expectation(description: "Wait for load completion")
-        _ = sut.loadImageData(from: url) { result in
-            switch result {
-            case let .success(loadedData):
-                XCTAssertEqual(loadedData, expectedData, file: file,line: line)
-                
-            case let .failure(error):
-                XCTFail("Expected successfull image data result, got \(error) instead",file: file,line: line)
-            }
-            exp.fulfill()
+        let loadedData = Result { try sut.loadImageData(from: url) }
+        
+        switch loadedData {
+        case let .success(loadedData):
+            XCTAssertEqual(loadedData, expectedData, file: file,line: line)
+            
+        case let .failure(error):
+            XCTFail("Expected successfull image data result, got \(error) instead",file: file,line: line)
         }
-        wait(for: [exp], timeout: 1.0)
-    }
+       }
     
     func setupEmptyStoreState() {
         deleteArtifact()

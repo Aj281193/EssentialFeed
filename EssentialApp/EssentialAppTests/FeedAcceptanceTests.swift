@@ -91,7 +91,7 @@ final class FeedAcceptanceTests: XCTestCase {
     
     private func launch(httpClient: HTTPClientStub = .offline, store: InMemoryFeedStore = .empty) -> ListViewController {
         
-        let sut = SceneDelegate(httpClient: httpClient, store: store)
+        let sut = SceneDelegate(httpClient: httpClient, store: store, scheduler: .immediateOnMainQueue)
         
         sut.window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         sut.configureWindow()
@@ -111,7 +111,7 @@ final class FeedAcceptanceTests: XCTestCase {
     }
 
     private func  enterBackground(with store: InMemoryFeedStore) {
-        let sut = SceneDelegate(httpClient: HTTPClientStub.offline, store: store)
+        let sut = SceneDelegate(httpClient: HTTPClientStub.offline, store: store, scheduler: .immediateOnMainQueue)
         sut.sceneWillResignActive(UIApplication.shared.connectedScenes.first!)
     }
     
@@ -145,6 +145,7 @@ final class FeedAcceptanceTests: XCTestCase {
     }
     
     private class InMemoryFeedStore: FeedStore, FeedImageDataStore {
+     
         
         var feedCache: CacheFeed?
         private var feedImageDataCache: [URL: Data] = [:]
@@ -153,15 +154,16 @@ final class FeedAcceptanceTests: XCTestCase {
             self.feedCache = feedCache
         }
         
-        func insert(_ data: Data, for url: URL, completion: @escaping (FeedImageDataStore.InsertionResult) -> Void) {
+        // FeedImageDataStore
+        func insert(_ data: Data, for url: URL) throws {
             feedImageDataCache[url] = data
-            completion(.success(()))
         }
         
-        func completeRetrieval(dataFromURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-            completion(.success(feedImageDataCache[url]))
+        func retrieve(dataFromURL url: URL) throws -> Data? {
+            feedImageDataCache[url]
         }
         
+        // FeedStore
         func deleteCacheFeed(completion: @escaping DeletionCompletion) {
             feedCache = nil
             completion(.success(()))

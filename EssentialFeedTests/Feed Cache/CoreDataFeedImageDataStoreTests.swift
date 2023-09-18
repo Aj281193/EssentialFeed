@@ -48,32 +48,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         expect(sut, toCompleteRetrievalWith: found(lastStoreData), for: url)
         
     }
-    
-    func test_sideEffects_runSerially() {
-        let sut = makeSUT()
-        let url = anyURL()
         
-        let op1 = expectation(description: "Operation 1")
-        
-        sut.insert([localImage(url: url)], timestamp: Date()) { _ in
-            op1.fulfill()
-        }
-        
-        let op2 = expectation(description: "Operation 2")
-        
-        sut.insert(anyData(), for: url) { _ in
-            op2.fulfill()
-        }
-        
-        let op3 = expectation(description: "operation3")
-        
-        sut.insert(anyData(), for: url) { _ in
-            op3.fulfill()
-        }
-        
-        wait(for: [op1,op2,op3], timeout: 5.0, enforceOrder: true)
-    }
-    
     // - MARK Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataFeedStore {
@@ -84,27 +59,25 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
         return sut
     }
     
-    private func found(_ data: Data) -> FeedImageDataStore.RetrievalResult {
+    private func found(_ data: Data) -> Result<Data?, Error> {
         return .success(data)
     }
     
-    private func notFound() ->  FeedImageDataStore.RetrievalResult  {
+    private func notFound() ->  Result<Data?, Error>  {
         return .success(.none)
     }
     
-    private func expect(_ sut: CoreDataFeedStore, toCompleteRetrievalWith expectedResult: FeedImageDataStore.RetrievalResult, for url: URL, file: StaticString = #file, line: UInt = #line) {
-        let exp = expectation(description: "wait for load completion")
+    private func expect(_ sut: CoreDataFeedStore, toCompleteRetrievalWith expectedResult: Result<Data?, Error>, for url: URL, file: StaticString = #file, line: UInt = #line) {
         
-        sut.completeRetrieval(dataFromURL: url) { receivedResult in
-            switch(receivedResult,expectedResult) {
-            case let (.success(receivedData), .success(expectedData)):
-                XCTAssertEqual(receivedData, expectedData,file: file,line: line)
-            default:
-                XCTFail("expected result \(expectedResult) got received result \(receivedResult)",file: file,line: line)
-            }
-            exp.fulfill()
+        let receivedResult = Result { try sut.retrieve(dataFromURL: url) }
+        
+        switch(receivedResult,expectedResult) {
+        case let (.success(receivedData), .success(expectedData)):
+            XCTAssertEqual(receivedData, expectedData,file: file,line: line)
+        default:
+            XCTFail("expected result \(expectedResult) got received result \(receivedResult)",file: file,line: line)
         }
-        wait(for: [exp], timeout: 1.0)
+        
     }
     
     private func localImage(url: URL) -> LocalFeedImage {
@@ -116,20 +89,20 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
     private func insert(_ data: Data, for url: URL, into sut: CoreDataFeedStore, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for cache insertion")
         let image = localImage(url: url)
+        
         sut.insert([image], timestamp: Date()) { result in
-            switch result {
-            case let .failure(error):
+            if case let .failure(error) = result {
                 XCTFail("Failed to save \(image) with error \(error)", file: file, line: line)
-                
-            case .success:
-                sut.insert(data, for: url) { result in
-                    if case let Result.failure(error) = result {
-                        XCTFail("failed to insert data \(data) with \(error)",file: file,line: line)
-                    }
-                }
             }
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
+        
+        do {
+            try  sut.insert(data, for: url)
+        } catch {
+            XCTFail("failed to insert data \(data) with \(error)",file: file,line: line)
+        }
     }
+    
 }
