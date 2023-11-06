@@ -10,7 +10,7 @@ Given the customer has connectivity
  Then the app should display the latest feed from remote
   And replace the cache with the new feed
 
-[![CI](https://github.com/Aj281193/EssentialFeed/actions/workflows/CI.yml/badge.svg)](https://github.com/Aj281193/EssentialFeed/actions/workflows/CI.yml)
+[![CI-iOS](https://github.com/Aj281193/EssentialFeed/actions/workflows/CI-iOS.yml/badge.svg)](https://github.com/Aj281193/EssentialFeed/actions/workflows/CI-iOS.yml)
 
  ### Narrative #2
 
