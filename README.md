@@ -11,6 +11,7 @@ Given the customer has connectivity
   And replace the cache with the new feed
 
 [![CI-iOS](https://github.com/Aj281193/EssentialFeed/actions/workflows/CI-iOS.yml/badge.svg)](https://github.com/Aj281193/EssentialFeed/actions/workflows/CI-iOS.yml)
+[![CI-macOS](https://github.com/Aj281193/EssentialFeed/actions/workflows/CI-macOS.yml/badge.svg)](https://github.com/Aj281193/EssentialFeed/actions/workflows/CI-macOS.yml)
 
  ### Narrative #2
 
