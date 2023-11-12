@@ -37,6 +37,7 @@
 		959E9C9C29D9939500DABE63 /* EssentialFeediOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 959E9C9929D9939500DABE63 /* EssentialFeediOS.framework */; };
 		959E9C9D29D9939500DABE63 /* EssentialFeediOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 959E9C9929D9939500DABE63 /* EssentialFeediOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		95B46ED72A51873A0057BCFE /* FeedAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B46ED62A51873A0057BCFE /* FeedAcceptanceTests.swift */; };
+		95DE3D2E2AFFE2EB00DBFDAE /* ListViewController + TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DE3D2D2AFFE2EB00DBFDAE /* ListViewController + TestHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		959E9C9829D9939500DABE63 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		959E9C9929D9939500DABE63 /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95B46ED62A51873A0057BCFE /* FeedAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAcceptanceTests.swift; sourceTree = "<group>"; };
+		95DE3D2D2AFFE2EB00DBFDAE /* ListViewController + TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewController + TestHelpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				95144CF229E1244100B82282 /* XCTestCaseTrackMemoryLeak.swift */,
 				95144CF729E125C700B82282 /* SharedTestHelpers.swift */,
 				9515FD222A88ECBE00AD4F0A /* FeedUIIntegrationTests+LoaderSpy.swift */,
+				95DE3D2D2AFFE2EB00DBFDAE /* ListViewController + TestHelpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				955FAA712A50982400F084FF /* FeedUIIntegration+TestsHelpers.swift in Sources */,
 				95144CF829E125C700B82282 /* SharedTestHelpers.swift in Sources */,
 				955FAA752A50983C00F084FF /* FeedUIIntegrationTests.swift in Sources */,
+				95DE3D2E2AFFE2EB00DBFDAE /* ListViewController + TestHelpers.swift in Sources */,
 				955FAA732A50982400F084FF /* UIView+TestHelpers.swift in Sources */,
 				955FAA6F2A50982400F084FF /* FeedUIIntegrationTests+Assertions.swift in Sources */,
 				955FAA6E2A50982400F084FF /* FeedUIIntegrationTests+UIImage.swift in Sources */,

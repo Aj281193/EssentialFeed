@@ -16,7 +16,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
 
    func test_commentView_hasTitle() {
         let (sut , _) = makeSUT()
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()   
         
         XCTAssertEqual(sut.title, commentTitle)
     }
@@ -26,7 +26,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadCommentCallCount, 0, "Expected no loading request before view is loaded")
   
        
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()   
         XCTAssertEqual(loader.loadCommentCallCount, 1, "Expected a loading request once the view is loaded")
   
          sut.simulateUserInitiatedReload()
@@ -44,7 +44,8 @@ final class CommentsUIIntegrationTests: XCTestCase {
     func test_loadingCommentsIndicator_isVisibleWhileLoadingComment() {
         let (sut, loader) = makeSUT()
         
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()
+        
         XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected a loading indicator once the view is loaded")
   
         
@@ -67,7 +68,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         
         let (sut, loader) = makeSUT()
         
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()   
         assertThat(sut, isRendring: [ImageComment]())
         
         loader.completeCommentsLoading(with: [comment0], at: 0)
@@ -83,7 +84,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         let comment = makeComments()
         
         let (sut, loader) = makeSUT()
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()   
         
         loader.completeCommentsLoading(with: [comment],at: 0)
         assertThat(sut, isRendring: [comment])
@@ -98,7 +99,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         let comment = makeComments()
         let (sut,loader) = makeSUT()
         
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()   
         loader.completeCommentsLoading(with: [comment], at: 0)
         assertThat(sut, isRendring: [comment])
         
@@ -109,7 +110,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
     
     func test_loadCommentsCompletion_dispatchesFromBackgroundToMainThread() {
         let (sut, loader) = makeSUT()
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()   
         
         let exp = expectation(description: "Wait for background queue")
         DispatchQueue.global().async {
@@ -122,7 +123,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
     func test_loadCommentsCompletion_rendersErrorMessageOnErrorUntilNextReload() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()   
         XCTAssertEqual(sut.errorMessage, nil)
 
         loader.completeCommentsLoadingWithError(at: 0)
@@ -135,7 +136,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
     func test_tapsOnErrorView_hidesErrorMessage() {
         let (sut,loader) = makeSUT()
         
-        sut.loadViewIfNeeded()
+        sut.simulateAppearance()   
         
         XCTAssertEqual(sut.errorMessage, nil)
         
@@ -157,7 +158,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
                 }).eraseToAnyPublisher()
             }
             
-            sut?.loadViewIfNeeded()
+            sut?.simulateAppearance()
         }
        
         weak var weakRef = sut
