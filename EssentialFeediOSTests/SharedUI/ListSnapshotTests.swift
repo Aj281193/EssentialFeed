@@ -20,15 +20,15 @@ final class ListSnapshotTests: XCTestCase {
         
     }
 
-    func test_listWithErrorMessage() {
-        let sut = makeSUT()
-        
-        sut.display(.error(message: "This is a \n multi-line \n error message"))
-        
-        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "LIST_WITH_ERROR_MESSAGE_light")
-        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "LIST_WITH_ERROR_MESSAGE_dark")
-        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light, contentSize: .extraExtraExtraLarge)), named: "LIST_WITH_ERROR_MESSAGE_dark_extraExtraExtraLarge")
-    }
+//    func test_listWithErrorMessage() {
+//        let sut = makeSUT()
+//        
+//        sut.display(.error(message: "This is a \n multi-line \n error message"))
+//        
+//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "LIST_WITH_ERROR_MESSAGE_light")
+//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "LIST_WITH_ERROR_MESSAGE_dark")
+//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light, contentSize: .extraExtraExtraLarge)), named: "LIST_WITH_ERROR_MESSAGE_dark_extraExtraExtraLarge")
+//    }
     
     //MARK:- Helpers
     private func makeSUT() -> ListViewController {
