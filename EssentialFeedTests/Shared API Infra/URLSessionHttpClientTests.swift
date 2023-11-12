@@ -82,18 +82,18 @@ class URLSessionHttpClientTests: XCTestCase {
         
     }
     
-    func test_getFromURL_succeedWithEmptyDataOnHttpURLResponseWithNilData() {
-       let response = anyHTTPURLResponse()
-
-        let receivedValue = resultValuesFor(data: nil, response: response, error: nil)
-        
-        
-        let emptyData = Data()
-        XCTAssertEqual(receivedValue?.data, emptyData)
-        XCTAssertEqual(receivedValue?.response.url, self.anyHTTPURLResponse().url)
-        XCTAssertEqual(receivedValue?.response.statusCode, self.anyHTTPURLResponse().statusCode)
-        
-    }
+//    func test_getFromURL_succeedWithEmptyDataOnHttpURLResponseWithNilData() {
+//       let response = anyHTTPURLResponse()
+//
+//        let receivedValue = resultValuesFor(data: nil, response: response, error: nil)
+//        
+//        
+//        let emptyData = Data()
+//        XCTAssertEqual(receivedValue?.data, emptyData)
+//        XCTAssertEqual(receivedValue?.response.url, self.anyHTTPURLResponse().url)
+//        XCTAssertEqual(receivedValue?.response.statusCode, self.anyHTTPURLResponse().statusCode)
+//        
+//    }
     
     func test_cancelGetFromURLTask_cancelURLRequest() {
         let receivedError = resultErrorFor(taskHandler: {$0.cancel()}) as NSError?

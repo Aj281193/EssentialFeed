@@ -37,8 +37,6 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
             XCTAssertFalse(data.isEmpty, "Expected non empty image data")
         case let .failure(error):
             XCTFail("Expected successful image data result, got \(error) instead")
-        default:
-            XCTFail("Expected successfull image data result ,got no result instead")
         }
     }
     
